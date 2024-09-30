@@ -32,8 +32,9 @@
     <!-- <link href="{{asset('user')}}/css/main_yummy.css" rel="stylesheet"> -->
 
     <!-- Vendor CSS Files -->
-    <!-- <link href="{{asset('user')}}/vendor/aos/aos.css" rel="stylesheet">
-    <link href="{{asset('user')}}/vendor/swiper/swiper-bundle.min.css" rel="stylesheet"> -->
+    <link href="{{asset('user')}}/vendor/aos/aos.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="{{asset('user')}}/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -104,13 +105,13 @@
     <!-- Product End -->
 
     <!-- Gallery Start -->
-    <!-- <section id="gallery" class="gallery section light-background">
+    <section id="gallery" class="gallery section light-background">
         @yield('gallery')
-    </section> -->
+    </section>
     <!-- Gallery End -->
 
     <!-- Blog Start -->
-    <div class="container-xxl py-5">
+    <!-- <div class="container-xxl py-5">
         <div class="container">
             <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
                 <h1 class="display-5 mb-3">Latest Blog</h1>
@@ -149,7 +150,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- Blog End -->
 
     <!-- Review Start -->
@@ -186,9 +187,9 @@
     <!-- <script src="{{asset('user')}}/js/main_yummy.js"></script> -->
 
     <!-- Vendor JS Files -->
-    <!-- <script src="{{asset('user')}}/vendor/php-email-form/validate.js"></script>
     <script src="{{asset('user')}}/vendor/aos/aos.js"></script>
-    <script src="{{asset('user')}}/vendor/swiper/swiper-bundle.min.js"></script> -->
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="{{asset('user')}}/vendor/swiper/swiper-bundle.min.js"></script>
 </body>
 
 </html>

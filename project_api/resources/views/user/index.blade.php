@@ -130,7 +130,7 @@
     <div class="row g-0 gx-5 align-items-end">
         <div class="col-lg-6">
             <div class="section-header text-start mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                <h1 class="display-5 mb-3">Our Products</h1>
+                <h1 class="display-5 mb-3">Featured Products</h1>
                 <p>Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed rebum vero dolor duo.</p>
             </div>
         </div>
@@ -683,26 +683,26 @@
     <div class="row g-0 gx-5 align-items-end">
         <div class="col-lg-6">
             <div class="section-header text-start mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                <h1 class="display-5 mb-3">Our Products</h1>
+                <h1 class="display-5 mb-3">Products Catalogue</h1>
                 <p>Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed rebum vero dolor duo.</p>
             </div>
         </div>
         <div class="col-lg-6 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
             <ul class="nav nav-pills d-inline-flex justify-content-end mb-5">
                 <li class="nav-item me-2">
-                    <a class="btn btn-outline-primary border-2 active" data-bs-toggle="pill" href="#tab-1">Vegetable</a>
+                    <a class="btn btn-outline-primary border-2 active" data-bs-toggle="pill" href="#cat-tab-1">Masala</a>
                 </li>
                 <li class="nav-item me-2">
-                    <a class="btn btn-outline-primary border-2" data-bs-toggle="pill" href="#tab-2">Fruits </a>
+                    <a class="btn btn-outline-primary border-2" data-bs-toggle="pill" href="#cat-tab-2">Paste</a>
                 </li>
                 <li class="nav-item me-0">
-                    <a class="btn btn-outline-primary border-2" data-bs-toggle="pill" href="#tab-3">Fresh</a>
+                    <a class="btn btn-outline-primary border-2" data-bs-toggle="pill" href="#cat-tab-3">Herbs</a>
                 </li>
             </ul>
         </div>
     </div>
     <div class="tab-content">
-        <div id="tab-1" class="tab-pane fade show p-0 active">
+        <div id="cat-tab-1" class="tab-pane fade show p-0 active">
             <div class="row g-4">
                 <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="product-item">
@@ -877,7 +877,7 @@
                 </div>
             </div>
         </div>
-        <div id="tab-2" class="tab-pane fade show p-0">
+        <div id="cat-tab-2" class="tab-pane fade show p-0">
             <div class="row g-4">
                 <div class="col-xl-3 col-lg-4 col-md-6">
                     <div class="product-item">
@@ -1052,7 +1052,7 @@
                 </div>
             </div>
         </div>
-        <div id="tab-3" class="tab-pane fade show p-0">
+        <div id="cat-tab-3" class="tab-pane fade show p-0">
             <div class="row g-4">
                 <div class="col-xl-3 col-lg-4 col-md-6">
                     <div class="product-item">
@@ -1231,8 +1231,70 @@
 </div>
 @endsection
 
-@section('review')
+@section('gallery')
+<!-- Section Title -->
+<!-- <div class="container section-title" data-aos="fade-up">
+    <h1 class="display-5 mb-3">Gallery</h1>
+    <p><span>Check</span> <span class="description-title">Our Gallery</span></p>
+</div>
+ -->
+<div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+        <h1 class="display-5 mb-3">Gallery</h1>
+        <p><span>Check</span> <span class="description-title">Our Gallery</span></p>
+</div>
 
+<!-- End Section Title -->
+
+<div class="container" data-aos="fade-up" data-aos-delay="100">
+
+    <div class="swiper init-swiper">
+        <script type="application/json" class="swiper-config">
+            {
+                "loop": true,
+                "speed": 600,
+                "autoplay": {
+                    "delay": 5000
+                },
+                "slidesPerView": "auto",
+                "centeredSlides": true,
+                "pagination": {
+                    "el": ".swiper-pagination",
+                    "type": "bullets",
+                    "clickable": true
+                },
+                "breakpoints": {
+                    "320": {
+                        "slidesPerView": 1,
+                        "spaceBetween": 0
+                    },
+                    "768": {
+                        "slidesPerView": 3,
+                        "spaceBetween": 20
+                    },
+                    "1200": {
+                        "slidesPerView": 5,
+                        "spaceBetween": 20
+                    }
+                }
+            }
+        </script>
+        <div class="swiper-wrapper align-items-center">
+            <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="{{asset('user')}}/img/gallery/gallery-1.jpg"><img src="{{asset('user')}}/img/gallery/gallery-1.jpg" class="img-fluid" alt=""></a></div>
+            <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="{{asset('user')}}/img/gallery/gallery-2.jpg"><img src="{{asset('user')}}/img/gallery/gallery-2.jpg" class="img-fluid" alt=""></a></div>
+            <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="{{asset('user')}}/img/gallery/gallery-3.jpg"><img src="{{asset('user')}}/img/gallery/gallery-3.jpg" class="img-fluid" alt=""></a></div>
+            <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="{{asset('user')}}/img/gallery/gallery-4.jpg"><img src="{{asset('user')}}/img/gallery/gallery-4.jpg" class="img-fluid" alt=""></a></div>
+            <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="{{asset('user')}}/img/gallery/gallery-5.jpg"><img src="{{asset('user')}}/img/gallery/gallery-5.jpg" class="img-fluid" alt=""></a></div>
+            <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="{{asset('user')}}/img/gallery/gallery-6.jpg"><img src="{{asset('user')}}/img/gallery/gallery-6.jpg" class="img-fluid" alt=""></a></div>
+            <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="{{asset('user')}}/img/gallery/gallery-7.jpg"><img src="{{asset('user')}}/img/gallery/gallery-7.jpg" class="img-fluid" alt=""></a></div>
+            <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="{{asset('user')}}/img/gallery/gallery-8.jpg"><img src="{{asset('user')}}/img/gallery/gallery-8.jpg" class="img-fluid" alt=""></a></div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+
+</div>
+@endsection
+
+@section('review')
 <div class="container">
     <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
         <h1 class="display-5 mb-3">Customer Review</h1>
@@ -1285,7 +1347,6 @@
         </div>
     </div>
 </div>
-
 @endsection
 
 @section('contact-us')
@@ -1352,7 +1413,6 @@
     </div>
 </div>
 <!-- Contact End -->
-
 
 <!-- Google Map Start -->
 <div class="container-xxl px-0 wow fadeIn" data-wow-delay="0.1s" style="margin-bottom: -6px;">
