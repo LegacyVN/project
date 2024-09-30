@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-class TestController extends Controller{
+class HomeUserController extends Controller{
 
    public function index(){
     
-      return "dd";
+      return view("user/index");
 
    }
 
