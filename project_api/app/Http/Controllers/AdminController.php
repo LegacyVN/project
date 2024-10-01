@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-class HomeUserController extends Controller{
+class AdminController extends Controller{
 
    public function index(){
-    "fffffff"
+    
       return view("user/index");
 
    }
