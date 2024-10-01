@@ -11,7 +11,12 @@ Route::get('/', [HomeController::class, 'home']);
 // Route::group(['prefix' => 'home'], function() {
 //     Route::get('/', [HomeController::class, 'home']);
 //     Route::get('/index', [HomeController::class, 'home']);
-// });    
+// });
+Route::group(["prefix"=> ""], function () {
+    Route::get("/",[HomeUserController::class,"index"]);
+    Route::get("/home",[HomeUserController::class,"index"]);
+    Route::get("/home/index",[HomeUserController::class,"index"]);
+});
 
 Route::get('/dashboard',[HomeController::class, 'home'])->middleware(['auth', 'verified'])->name('dashboard');
 
