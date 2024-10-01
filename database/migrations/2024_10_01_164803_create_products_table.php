@@ -6,28 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->id();
+            $table->id(); // Primary key
             $table->string('title')->nullable();
             $table->longText('description')->nullable();
             $table->string('image')->nullable();
-            $table->string('price')->nullable(); // Use DECIMAL for price
-            $table->string('category_id')->nullable();
-            $table->integer('quantity')->nullable(); // Use INTEGER for quantity
-            $table->string('discount_price')->nullable(); // Use DECIMAL for discount price
+            $table->decimal('price', 8, 2)->nullable();
+            $table->foreignId('category_id')->nullable()->constrained('categories')->onDelete('set null'); // Foreign key
+            $table->integer('quantity')->nullable();
+            $table->decimal('discount_price', 8, 2)->nullable();
+            $table->string('status')->default('active');
             $table->timestamps();
-            
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('products');
