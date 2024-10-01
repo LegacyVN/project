@@ -11,10 +11,17 @@ class HomeController extends Controller
         return view('admin.index');
     }
 
-    public function home() {
-        $product = Product::orderBy('id', 'desc')->take(12)->get();
-        return view('home.index' , compact('product'));
-    }
+
+    public function home(){
+    
+        return view("home/index");
+  
+     }
+
+    // public function home() {
+    //     $product = Product::orderBy('id', 'desc')->take(12)->get();
+    //     return view('home.index' , compact('product'));
+    // }
 
     public function product_details($id) {
         $data = Product::find($id);
