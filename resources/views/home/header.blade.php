@@ -56,11 +56,11 @@
                             </form>
                         </div>
                     @else
-                        <li class="nav-item">
+                        <li class="d-flex align-items-center me-3">
                             <a href="{{ route('login') }}" class="nav-link"><i class="fa fa-user"></i> Login</a>
                         </li>
                         @if (Route::has('register'))
-                            <li class="nav-item">
+                            <li class="d-flex align-items-center me-3">
                                 <a href="{{ route('register') }}" class="nav-link"><i class="fa fa-vcard"></i> Register</a>
                             </li>
                         @endif
