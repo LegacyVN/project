@@ -12,21 +12,25 @@ class Product extends Model
     protected $fillable = [
         'title',
         'description',
-        'price',
-        'quantity',
-        'category_id', // Ensure this is the correct column name
         'image',
-        'discount_price'
+        'price',
+        'category_id',
+        'quantity',
+        'discount_price',
+        'status',
     ];
 
-    // Define the relationship with Category
-    // public function category()
-    // {
-    //     return $this->belongsTo(Category::class, 'category_id', 'id');
-    // }
-    // In Product.php model
+    protected $casts = [
+        'price' => 'decimal:2',
+        'discount_price' => 'decimal:2',
+        'quantity' => 'integer',
+    ];
+
+    // Define a relationship with the Category model (if you have one)
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
+
+    // You can add additional methods or scopes here as needed
 }

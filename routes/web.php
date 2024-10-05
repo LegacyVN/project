@@ -34,6 +34,20 @@ require __DIR__.'/auth.php';
 //admin route
 route::get('admin/dashboard', [HomeController::class, 'index'])-> middleware(['auth', 'admin']);
 
+
+//route for user
+Route::group(["prefix"=> "admin"], function () {
+    Route::get('/users', [AdminController::class, 'viewUsers']); // View all users
+    Route::get('/user_search', [AdminController::class, 'userSearchByKeyword'])->name('user_search'); // Search users by keyword
+    Route::get('/add-new-user', [AdminController::class, 'addUser'])->name('add_user'); // Show add user form
+    Route::post('/save-user', [AdminController::class, 'saveUser'])->name('save_user'); // Save a new user
+    Route::delete('/users/{id}', [AdminController::class, 'deleteUser'])->name('delete_user'); // Delete a user
+    Route::get('/users/edit/{id}', [AdminController::class, 'editUser'])->name('edit_user'); // Show edit user form
+    Route::put('/users/{id}', [AdminController::class, 'updateUser'])->name('update_user'); // Update user
+});
+
+
+
 //route for category
 route::get('view_category', [AdminController::class, 'view_category'])-> middleware(['auth', 'admin']);
 
