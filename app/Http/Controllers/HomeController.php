@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Products;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     public function index() {
-        return view('admin.index');
+        return view('admin.dashboard.index');
     }
 
 
@@ -24,9 +25,9 @@ class HomeController extends Controller
     // }
 
     public function product_details($id) {
-        $data = Product::find($id);
+        $data = Products::find($id);
         
-        $products = Product::where('category_id', $data->category_id)->take(4)->get();
+        $products = Products::where('category_id', $data->category_id)->take(4)->get();
         
         return view('home.product_details', compact('data'), compact('products'));
     }

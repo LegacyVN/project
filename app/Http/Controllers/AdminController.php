@@ -24,108 +24,125 @@ use Illuminate\Support\Facades\Storage;
 class AdminController extends Controller
 {
 
+// Search users by keyword
+public function userSearchByKeyword(Request $request)
+{
+    $keyword = $request->get('keyword');
 
-    // Search users by keyword
-    public function userSearchByKeyword(Request $request)
-    {
-        $keyword = $request->get('keyword');
+    $users = User::where('name', 'like', '%' . $keyword . '%')->paginate(5);
+    $totalUsers = User::where('name', 'like', '%' . $keyword . '%')->count();
 
-        $users = User::where('name', 'like', '%' . $keyword . '%')->paginate(5);
-        $totalUsers = User::where('name', 'like', '%' . $keyword . '%')->count();
+    return view('admin.user.user', [
+        'users' => $users,
+        'totalusers' => $totalUsers,
+    ]);
+}
 
-        return view('admin.user.user', [
-            'users' => $users,
-            'totalusers' => $totalUsers,
-        ]);
+// View all users
+public function viewUsers()
+{
+    $users = User::orderBy('id', 'desc')->paginate(5);
+    $totalUsers = User::count();
+
+    return view('admin.user.user', [
+        'users' => $users,
+        'totalusers' => $totalUsers,
+    ]);
+    
+}
+
+// Show the add user form
+public function addUser()
+{
+    return view('admin.user.add_user');
+}
+
+// Save a new user
+// public function saveUser(Request $request)
+// {
+//     $validatedData = $request->validate([
+//         'name' => 'required|string|max:255',
+//         'email' => 'required|string|email|max:255|unique:users',
+//         'phone' => 'nullable|string|max:15',
+//         'address' => 'nullable|string|max:255',
+//         'password' => 'required|string|min:8|confirmed',
+//     ]);
+
+//     try {
+//         User::create([
+//             'name' => $validatedData['name'],
+//             'email' => $validatedData['email'],
+//             'phone' => $validatedData['phone'],
+//             'address' => $validatedData['address'],
+//             'password' => Hash::make($validatedData['password']),
+//             'user_status' => 1, // Default user status
+//         ]);
+
+//         toastr()->closeButton()->addSuccess('User Added Successfully');
+//         return redirect()->route('view_user')->with('msg', 'User added successfully.');
+//     } catch (\Exception $e) {
+//         return redirect()->back()->withInput()->withErrors(['msg' => 'Failed to add user: ' . $e->getMessage()]);
+//     }
+// }
+
+// Delete a user
+public function deleteUser($id)
+{
+    $user = User::findOrFail($id);
+    $user->delete();
+
+    toastr()->closeButton()->addSuccess('User Deleted Successfully');
+    return redirect()->back();
+}
+
+// Show the edit user form
+public function editUser($id)
+{
+    $user = User::findOrFail($id);
+    return view('admin.user.edit_user', compact('user'));
+}
+
+// Update the user
+public function updateUser(Request $request, $id)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users,email,' . $id,
+        'phone' => 'nullable|string|max:15',
+        'address' => 'nullable|string|max:255',
+        'usertype' => 'required|string',
+    ]);
+
+    $user = User::findOrFail($id);
+    $user->update($request->except('password')); // Exclude password from mass assignment
+
+    // Optionally update password if provided
+    if ($request->filled('password')) {
+        $user->password = Hash::make($request->password);
+        $user->save();
     }
 
-    // View all users
-    public function viewUsers()
-    {
-        $users = User::orderBy('id', 'desc')->paginate(5);
-        $totalUsers = User::count();
+    toastr()->closeButton()->addSuccess('User Updated Successfully');
+    return redirect()->route('view_user')->with('msg', 'User updated successfully.');
+}
 
-        return view('admin.user.user', [
-            'users' => $users,
-            'totalusers' => $totalUsers,
-        ]);
 
-    }
+// View all users
+public function vieworder()
+{
+    $users = User::orderBy('id', 'desc')->paginate(5);
+    $totalUsers = User::count();
 
-    // Show the add user form
-    public function addUser()
-    {
-        return view('admin.user.add_user');
-    }
+    return view('admin.user.user', [
+        'users' => $users,
+        'totalusers' => $totalUsers,
+    ]);
+    
+}
 
-    // Save a new user
-    // public function saveUser(Request $request)
-    // {
-    //     $validatedData = $request->validate([
-    //         'name' => 'required|string|max:255',
-    //         'email' => 'required|string|email|max:255|unique:users',
-    //         'phone' => 'nullable|string|max:15',
-    //         'address' => 'nullable|string|max:255',
-    //         'password' => 'required|string|min:8|confirmed',
-    //     ]);
 
-    //     try {
-    //         User::create([
-    //             'name' => $validatedData['name'],
-    //             'email' => $validatedData['email'],
-    //             'phone' => $validatedData['phone'],
-    //             'address' => $validatedData['address'],
-    //             'password' => Hash::make($validatedData['password']),
-    //             'user_status' => 1, // Default user status
-    //         ]);
 
-    //         toastr()->closeButton()->addSuccess('User Added Successfully');
-    //         return redirect()->route('view_user')->with('msg', 'User added successfully.');
-    //     } catch (\Exception $e) {
-    //         return redirect()->back()->withInput()->withErrors(['msg' => 'Failed to add user: ' . $e->getMessage()]);
-    //     }
-    // }
 
-    // Delete a user
-    public function deleteUser($id)
-    {
-        $user = User::findOrFail($id);
-        $user->delete();
-
-        toastr()->closeButton()->addSuccess('User Deleted Successfully');
-        return redirect()->back();
-    }
-
-    // Show the edit user form
-    public function editUser($id)
-    {
-        $user = User::findOrFail($id);
-        return view('admin.edit_user', compact('user'));
-    }
-
-    // Update the user
-    public function updateUser(Request $request, $id)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
-            'phone' => 'nullable|string|max:15',
-            'address' => 'nullable|string|max:255',
-            'usertype' => 'required|string',
-        ]);
-
-        $user = User::findOrFail($id);
-        $user->update($request->except('password')); // Exclude password from mass assignment
-
-        // Optionally update password if provided
-        if ($request->filled('password')) {
-            $user->password = Hash::make($request->password);
-            $user->save();
-        }
-
-        toastr()->closeButton()->addSuccess('User Updated Successfully');
-        return redirect()->route('view_user')->with('msg', 'User updated successfully.');
-    }
 
     /// CATEGORY
     public function indexCategory()
