@@ -44,6 +44,12 @@ Route::group(["prefix"=> "admin"], function () {
     Route::delete('/users/{id}', [AdminController::class, 'deleteUser'])->name('delete_user'); // Delete a user
     Route::get('/users/edit/{id}', [AdminController::class, 'editUser'])->name('edit_user'); // Show edit user form
     Route::put('/users/{id}', [AdminController::class, 'updateUser'])->name('update_user'); // Update user
+    // category
+    Route::get('/categories', [AdminController::class, 'indexCategory'])->name('categories.index');
+    Route::post('/add-category', [AdminController::class, 'addCategory'])->name('categories.store');
+    Route::get('/categories/{id}/edit', [AdminController::class, 'editCategory'])->name('categories.edit');
+    Route::put('/categories/{id}', [AdminController::class, 'updateCategory'])->name('categories.update');
+    Route::delete('/categories/{id}', [AdminController::class, 'destroyCategory'])->name('categories.destroy');
 });
 
 
