@@ -35,18 +35,10 @@
                     </li>
 
                     <li class="sidebar-list">
-                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                        <a class="sidebar-link sidebar-title" href="{{ url('admin/users') }}">
                             <i class="ri-user-3-line"></i>
                             <span>Users</span>
                         </a>
-                        <ul class="sidebar-submenu">
-                            <li>
-                                <a href="{{ url('admin/users') }}">All Users</a>
-                            </li>
-                            <li>
-                                <a href="{{ url('admin/add-new-user') }}">Add New User</a>
-                            </li>
-                        </ul>
                     </li>
 
                     <li class="sidebar-list">
