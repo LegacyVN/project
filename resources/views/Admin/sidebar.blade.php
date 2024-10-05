@@ -52,14 +52,11 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <i class="ri-focus-3-line"></i>
-                            <span>Country</span>
+                            <span>Category</span>
                         </a>
                         <ul class="sidebar-submenu">
                             <li>
-                                <a href="{{ url('admin/view_country') }}">All Countries</a>
-                            </li>
-                            <li>
-                                <a href="{{ url('/add_country') }}">Add New Country</a>
+                                <a href="{{ url('admin/categories') }}">List Categories</a>
                             </li>
                         </ul>
                     </li>
