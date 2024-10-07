@@ -17,7 +17,7 @@ Route::group(["prefix"=> ""], function () {
     Route::get("/home",[HomeController::class,"home"]);
     Route::get("/home/index",[HomeController::class,"home"]);
 });
-
+//
 
 
 Route::get('/dashboard',[HomeController::class, 'home'])->middleware(['auth', 'verified'])->name('dashboard');
