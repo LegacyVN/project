@@ -15,7 +15,7 @@
                 @endif
 
                 <div class="container mt-4">
-                    <form method="GET" action="{{ route('product_search') }}">
+                    <form method="GET" action="{{ route('products.search') }}">
                         <input type="text" name="keyword" placeholder="Search by product title" value="{{ request('keyword') }}" class="form-control">
                         <button type="submit" class="btn btn-primary mt-2">Search</button>
                     </form>
@@ -59,7 +59,7 @@
                                 </td>
                                 <td>
                                     <div class="d-flex">
-                                        <a href="{{ route('product_edit', $product->id)  }}" class="btn btn-edit">
+                                        <a href="{{ route('products.edit', $product->id)  }}" class="btn btn-edit">
                                             <i class="fa-solid fa-pen-to-square fa-lg" style="color: #024dcf;"></i>
                                         </a>
                                         <form action="{{ route('products.delete', $product->id) }}" method="POST" onsubmit="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');" style="display:inline;">

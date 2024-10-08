@@ -58,14 +58,14 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <i class="ri-focus-3-line"></i>
-                            <span>City</span>
+                            <span>Product</span>
                         </a>
                         <ul class="sidebar-submenu">
                             <li>
-                                <a href="{{ url('admin/view_city') }}">All Cities</a>
+                                <a href="{{ url('admin/products') }}">All Products</a>
                             </li>
                             <li>
-                                <a href="{{ url('/add_city') }}">Add New City</a>
+                                <a href="{{ url('admin/products/create') }}">Add New Product</a>
                             </li>
                         </ul>
                     </li>

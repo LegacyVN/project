@@ -14,7 +14,7 @@
                 @endif
 
                 <div class="container mt-4">
-                    <form method="POST" action="{{ route('update_product', $product->id) }}">
+                    <form method="POST" action="{{ route('products.update', $product->id) }}">
                         @csrf
                         @method('PUT')
                         <div class="form-group mb-3">
