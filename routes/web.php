@@ -60,6 +60,8 @@ Route::group(["prefix"=> "admin"], function () {
     Route::get('/products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit'); 
     Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update');
     Route::delete('/products/{id}', [ProductController::class, 'delete'])->name('products.delete'); 
+    Route::get('products/{product}/photos/create', [ProductController::class, 'createPhoto'])->name('product_photos.create');
+    Route::post('products/{product}/photos', [ProductController::class, 'storePhoto'])->name('product_photos.store');
 });
 
 

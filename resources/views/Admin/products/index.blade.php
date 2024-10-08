@@ -42,7 +42,7 @@
                             @foreach($products as $product)
                             <tr>
                                 <td>{{ $product->title }}</td> <!-- Thay name bằng title -->
-                                <td><img src="{{ asset('images/' . $product->image) }}" alt=""></td>
+                                <td><img src="{{ asset( '/'.$product->image) }}" alt="{{ $product->title }}" style="width:100px; height:auto;"></td>
                                 <td>{{ $product->price }}</td>
                                 <td>{{ $product->category->cat_name }}</td> <!-- Quan hệ với bảng categories -->
                                 <td>{{ $product->quantity }}</td>
@@ -69,6 +69,9 @@
                                                 <i class="fa-regular fa-trash-can" style="color: #eb0000;"></i>
                                             </button>
                                         </form>
+                                        <a href="{{ route('product_photos.create', $product->id) }}" class="btn btn-add-image">
+                                            <i class="fa-solid fa-square-plus fa-lg" style="color: #FFD43B;"></i> 
+                                        </a>
                                     </div>
                                 </td>
                             </tr>
