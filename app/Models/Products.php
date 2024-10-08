@@ -32,5 +32,12 @@ class Products extends Model
         return $this->belongsTo(Categories::class);
     }
 
+    // In Products model
+    public function photos()
+    {
+        return $this->hasMany(Photo::class, 'product_id'); // Ensure this uses 'product_id'
+    }
+
+
     // You can add additional methods or scopes here as needed
 }

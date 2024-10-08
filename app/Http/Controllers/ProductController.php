@@ -56,7 +56,7 @@ class ProductController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName();
-            $imagePath = public_path('images');
+            $imagePath = public_path('products');
 
 
             if (!file_exists($imagePath)) {
@@ -67,7 +67,7 @@ class ProductController extends Controller
             $image->move($imagePath, $imageName);
 
 
-            $productData['image'] = 'images/' . $imageName;
+            $productData['image'] = 'products/' . $imageName;
         } else {
             return redirect()->back()->with('error', 'Không thể tải lên hình ảnh.');
         }
@@ -131,13 +131,41 @@ class ProductController extends Controller
 
     public function delete($id)
     {
-
+        // Find the product by ID or fail
         $product = Products::findOrFail($id);
-
+    
+        // Get all photos associated with the product using the relationship
+        $photos = $product->photos; 
+    
+        // Loop through each photo to delete the image file and the photo record
+        foreach ($photos as $photo) {
+            $image_path = public_path('products/' . $photo->photo_name);
+    
+            // Check if the image file exists before attempting to delete it
+            if (file_exists($image_path)) {
+                unlink($image_path); // Delete the photo file from the folder
+            }
+    
+            // Delete the photo from the database
+            $photo->delete();
+        }
+    
+        // Delete the main product image file if it exists
+        $product_image_path = public_path('products/' . $product->image);
+        if ($product->image && file_exists($product_image_path)) {
+            unlink($product_image_path); // Delete the main product image
+        }
+    
+        // Finally, delete the product
         $product->delete();
-
-        return redirect()->route('products.index')->with('msg', 'Xóa sản phẩm thành công!');
+    
+        // Optionally add a success message using toastr
+        toastr()->closeButton()->addSuccess('Product and associated photos deleted successfully');
+    
+        // Redirect back to the product listing page
+        return redirect()->back();
     }
+    
 
 
     public function createPhoto($productId)
@@ -157,7 +185,7 @@ class ProductController extends Controller
         if ($request->hasFile('photo')) {
             $image = $request->file('photo');
             $imageName = time() . '_' . $image->getClientOriginalName();
-            $imagePath = public_path('images');
+            $imagePath = public_path('products');
 
        
             if (!file_exists($imagePath)) {
