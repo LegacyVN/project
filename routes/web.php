@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -46,11 +47,11 @@ Route::group(["prefix"=> "admin"], function () {
     Route::get('/users/edit/{id}', [AdminController::class, 'editUser'])->name('edit_user'); // Show edit user form
     Route::put('/users/{id}', [AdminController::class, 'updateUser'])->name('update_user'); // Update user
     // category
-    Route::get('/categories', [AdminController::class, 'indexCategory'])->name('categories.index');
-    Route::post('/add-category', [AdminController::class, 'addCategory'])->name('categories.store');
-    Route::get('/categories/{id}/edit', [AdminController::class, 'editCategory'])->name('categories.edit');
-    Route::put('/categories/{id}', [AdminController::class, 'updateCategory'])->name('categories.update');
-    Route::delete('/categories/{id}', [AdminController::class, 'destroyCategory'])->name('categories.destroy');
+    Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+    Route::post('/add-category', [CategoryController::class, 'add'])->name('categories.store');
+    Route::get('/categories/{id}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
+    Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
     //product
     Route::get('/products', [ProductController::class, 'index'])->name('products.index'); 
     Route::get('/products/search', [ProductController::class, 'search'])->name('products.search'); 
@@ -61,28 +62,6 @@ Route::group(["prefix"=> "admin"], function () {
     Route::delete('/products/{id}', [ProductController::class, 'delete'])->name('products.delete'); 
 });
 
-
-
-//route for category
-route::get('view_category', [AdminController::class, 'view_category'])-> middleware(['auth', 'admin']);
-
-route::get('searchByKeyword', [AdminController::class, 'searchByKeyword'])->middleware(['auth', 'admin']);
-
-route::post('add_category', [AdminController::class, 'add_category'])-> middleware(['auth', 'admin']);
-
-route::get('delete_category/{id}', [AdminController::class, 'delete_category'])-> middleware(['auth', 'admin']);
-
-Route::get('edit_category/{id}', [AdminController::class, 'editCategory'])->name('edit.category')-> middleware(['auth', 'admin']);
-
-Route::post('category/update', [AdminController::class, 'update'])-> middleware(['auth', 'admin']);
-
-//route for product
-route::get('productSearchByKeyword', [AdminController::class, 'productSearchByKeyword'])->middleware(['auth', 'admin']);
-
-Route::get('add_product', [AdminController::class, 'add_product'])->middleware(['auth', 'admin']);
-Route::get('view_product', [AdminController::class, 'view_product'])->name('view_product')->middleware(['auth', 'admin']);
-Route::post('add_product/save', [AdminController::class, 'save'])->middleware(['auth', 'admin']);
-Route::get('delete_product/{id}', [AdminController::class, 'delete_product'])->middleware(['auth', 'admin']);
 
 // Route to display the edit form
 Route::get('edit_product/{id}', [AdminController::class, 'editProduct'])->name('edit_product')->middleware(['auth', 'admin']);
