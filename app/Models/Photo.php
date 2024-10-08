@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,6 +14,9 @@ class Photo extends Model
         'photo_name',
         'product_id',
     ];
+
+    // Specify the primary key
+    protected $primaryKey = 'photo_id';
 
     // Define a relationship with the Product model
     public function product()
