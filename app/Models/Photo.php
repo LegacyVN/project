@@ -19,6 +19,6 @@ class Photo extends Model
     // Define a relationship with the Product model
     public function product()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Products::class);
     }
 }

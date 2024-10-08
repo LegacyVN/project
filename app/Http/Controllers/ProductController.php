@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categories;
+use App\Models\Photo;
 use App\Models\Products;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class ProductController extends Controller
     public function index()
     {
         $categories = Categories::all();
-        $products = Products::paginate(10); 
+        $products = Products::paginate(10);
         $totalproducts = Products::count();
 
         return view('Admin/products/index', compact('categories', 'products', 'totalproducts'));
@@ -23,7 +24,7 @@ class ProductController extends Controller
 
     public function search(Request $request)
     {
-        $keyword = $request->input('keyword'); 
+        $keyword = $request->input('keyword');
 
         $products = Products::where('title', 'like', "%{$keyword}%")->paginate(10);
 
@@ -38,42 +39,61 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-
+        
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'price' => 'required|numeric',
-            'category_id' => 'required|integer|exists:categories,id', 
+            'category_id' => 'required|integer|exists:categories,id',
             'quantity' => 'required|integer',
             'discount_price' => 'nullable|numeric',
             'status' => 'required|boolean',
         ]);
 
-    
+        $productData = $request->only(['title', 'description', 'price', 'category_id', 'quantity', 'discount_price', 'status']);
+
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('images', 'public');
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $imagePath = public_path('images');
+
+
+            if (!file_exists($imagePath)) {
+                mkdir($imagePath, 0777, true);
+            }
+
+
+            $image->move($imagePath, $imageName);
+
+
+            $productData['image'] = 'images/' . $imageName;
         } else {
             return redirect()->back()->with('error', 'Không thể tải lên hình ảnh.');
         }
 
 
-        $productData = $request->only(['title', 'description', 'price', 'category_id', 'quantity', 'discount_price', 'status']);
-        $productData['image'] = $imagePath;
-
         $product = Products::create($productData);
 
+
         if ($product) {
-            return redirect()->route('products.index')->with('success', 'Sản phẩm đã được thêm thành công!');
+            $photo = new Photo();
+            $photo->photo_name = $imageName; 
+            $photo->product_id = $product->id; 
+            $photo->save();
+
+            return redirect()->route('products.index')->with('success', 'Sản phẩm và hình ảnh đã được thêm thành công!');
         } else {
             return redirect()->back()->with('error', 'Đã xảy ra lỗi khi thêm sản phẩm.');
         }
     }
 
 
+
+
     public function edit($id)
     {
-     
+
         $product = Products::findOrFail($id);
 
         return view('Admin.products.edit', compact('product'));
@@ -105,17 +125,55 @@ class ProductController extends Controller
             'status' => $request->input('status'),
         ]);
 
-   
+
         return redirect()->route('products.index')->with('msg', 'Cập nhật sản phẩm thành công!');
     }
 
     public function delete($id)
     {
- 
+
         $product = Products::findOrFail($id);
 
         $product->delete();
 
         return redirect()->route('products.index')->with('msg', 'Xóa sản phẩm thành công!');
     }
+
+
+    public function createPhoto($productId)
+    {
+        $product = Products::findOrFail($productId);
+        return view('Admin/products/add_photo', compact('product'));
+    }
+
+    // Lưu ảnh vào bảng photos
+    public function storePhoto(Request $request, $productId)
+    {
+        
+        $request->validate([
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        if ($request->hasFile('photo')) {
+            $image = $request->file('photo');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $imagePath = public_path('images');
+
+       
+            if (!file_exists($imagePath)) {
+                mkdir($imagePath, 0777, true);
+            }
+
+            $image->move($imagePath, $imageName);
+            $photo = new Photo();
+            $photo->photo_name = $imageName;
+            $photo->product_id = $productId;
+            $photo->save();
+
+            return redirect()->route('products.index', $productId)->with('success', 'Ảnh đã được thêm thành công!');
+        } else {
+            return redirect()->back()->with('error', 'Không thể tải lên hình ảnh.');
+        }
+    }
+
 }

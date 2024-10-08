@@ -62,9 +62,9 @@
                                     <label class="form-label-title col-sm-3 mb-0">Categories</label>
                                     <div class="col-sm-9">
                                         <select class="form-control" name="category_id" required>
-                                            <option value="" disabled selected>Select Category</option>
+                                            <option value="" disabled {{ old('category_id') == '' ? 'selected' : '' }}>Select Category</option>
                                             @foreach ($categories as $category)
-                                                <option value="{{ $category->id }}">{{ $category->cat_name }}</option>
+                                            <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>{{ $category->cat_name }}</option>
                                             @endforeach
                                         </select>
                                         @error('category_id')
@@ -99,16 +99,19 @@
                                 <div class="mb-4 row align-items-center">
                                     <label class="form-label-title col-sm-3 mb-0">Status</label>
                                     <div class="col-sm-9">
-                                        <select class="form-control" name="status" required>
-                                            <option value="1">In Stock</option>
-                                            <option value="0">Out Stock</option>
-                                        </select>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="status" id="inStock" value="1" required>
+                                            <label class="form-check-label" for="inStock">In Stock</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="status" id="outStock" value="0" required>
+                                            <label class="form-check-label" for="outStock">Out Stock</label>
+                                        </div>
                                         @error('status')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
-
                                 <!-- Nút thêm sản phẩm -->
                                 <div class="mb-4 row align-items-center">
                                     <div class="col-sm-9 offset-sm-3">
