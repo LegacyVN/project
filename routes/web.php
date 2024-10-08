@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -50,6 +51,14 @@ Route::group(["prefix"=> "admin"], function () {
     Route::get('/categories/{id}/edit', [AdminController::class, 'editCategory'])->name('categories.edit');
     Route::put('/categories/{id}', [AdminController::class, 'updateCategory'])->name('categories.update');
     Route::delete('/categories/{id}', [AdminController::class, 'destroyCategory'])->name('categories.destroy');
+    //product
+    Route::get('/products', [ProductController::class, 'index'])->name('products.index'); 
+    Route::get('/products/search', [ProductController::class, 'search'])->name('products.search'); 
+    Route::get('/products/create', [ProductController::class, 'create'])->name('products.create'); 
+    Route::post('/products', [ProductController::class, 'store'])->name('products.store'); 
+    Route::get('/products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit'); 
+    Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update');
+    Route::delete('/products/{id}', [ProductController::class, 'delete'])->name('products.delete'); 
 });
 
 
