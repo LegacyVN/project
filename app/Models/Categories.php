@@ -9,16 +9,12 @@ class Categories extends Model
 {
     use HasFactory;
 
+    public $table = "categories";
+    protected $primarykey = "id";
     protected $fillable = [
         'cat_name',
     ];
 
-    // Define the relationship with Product
-    // public function products()
-    // {
-    //     return $this->hasMany(Product::class, 'category_id', 'id');
-    // }
-    // In Category.php model/
     public function products()
     {
         return $this->hasMany(Products::class);

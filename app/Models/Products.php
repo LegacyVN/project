@@ -9,6 +9,8 @@ class Products extends Model
 {
     use HasFactory;
 
+    public $table = "products";
+    protected $primarykey = "id";
     protected $fillable = [
         'title',
         'description',
@@ -18,6 +20,7 @@ class Products extends Model
         'quantity',
         'discount_price',
         'status',
+        'created_at'
     ];
 
     protected $casts = [

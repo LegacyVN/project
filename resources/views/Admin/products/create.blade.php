@@ -88,10 +88,16 @@
                                 <div class="mb-4 row align-items-center">
                                     <label class="form-label-title col-sm-3 mb-0">Discount Price</label>
                                     <div class="col-sm-9">
-                                        <input class="form-control" type="number" name="discount_price" placeholder="Enter Discount Price (Optional)">
-                                        @error('discount_price')
-                                        <span class="text-danger">{{ $message }}</span>
-                                        @enderror
+                                        <select name="discount_price">
+                                            <option value="0.00" selected="selected">No Discount</option>
+                                            @for($i=0.05;$i<=1.00;$i+=0.05)
+                                                <option value="{{ number_format($i, 2) }}">{{ number_format($i * 100, 0) . "%" }}</option>
+                                            @endfor
+                                            <!-- <input class="form-control" type="text" value="1.0" name="discount_price" placeholder="Enter Discount Price (Optional)"> -->
+                                            <!-- @error('discount_price')
+                                            <span class="text-danger">{{ $message }}</span>
+                                            @enderror -->
+                                        </select>
                                     </div>
                                 </div>
 

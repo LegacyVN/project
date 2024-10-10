@@ -11,6 +11,7 @@ class OrderDetail extends Model
 
     protected $table = 'order_details'; // Specify the table name if needed
 
+    protected $primarykey = 'detail_id';
     protected $fillable = [
         'order_id',
         'product_id',

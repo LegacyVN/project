@@ -47,7 +47,7 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'category_id' => 'required|integer|exists:categories,id',
             'quantity' => 'required|integer',
-            'discount_price' => 'nullable|numeric',
+            'discount_price' => 'required|numeric|min:0.00|max:1.00',
             'status' => 'required|boolean',
         ]);
 
@@ -67,7 +67,7 @@ class ProductController extends Controller
             $image->move($imagePath, $imageName);
 
 
-            $productData['image'] = 'products/' . $imageName;
+            $productData['image'] = $imageName;
         } else {
             return redirect()->back()->with('error', 'Không thể tải lên hình ảnh.');
         }

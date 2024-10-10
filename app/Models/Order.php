@@ -11,6 +11,7 @@ class Order extends Model
 
     protected $table = 'orders'; // Specify the table name if different from the default
 
+    protected $primarykey = "order_id";
     protected $fillable = [
         'user_id',
         'order_date',
