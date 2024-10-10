@@ -16,7 +16,7 @@ return new class extends Migration
             $table->decimal('price', 8, 2)->nullable();
             $table->foreignId('category_id')->nullable()->constrained('categories')->onDelete('set null'); // Foreign key
             $table->integer('quantity')->nullable();
-            $table->decimal('discount_price', 8, 2)->nullable();
+            $table->decimal('discount_price', 8, 2)->default(0.00)->nullable();
             $table->string('status')->default('active');
             $table->timestamps();
         });

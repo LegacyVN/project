@@ -7,20 +7,33 @@
 </head>
 
 <body>
-    <!-- Spinner Start -->
-    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-        <div class="spinner-border text-primary" role="status"></div>
+    <!-- Contact Modal -->
+    <div class="modal fade" id="modalAlert" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Alert</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Your message has been received!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- Spinner End -->
-    <!-- header Start -->
+    <!-- Navbar Start -->
     @include('home.header')
-    <!-- header End -->
+    <!-- Navbar End -->
 
+    <!-- Carousel Start -->
+    @include('home.carousel')
+    <!-- Carousel End -->
 
     <!-- About Start -->
-    <div class="container-xxl py-5">
-        @include('home.aboutUs')
-    </div>
+    @include('home.aboutUs')
     <!-- About End -->
 
 
@@ -62,21 +75,15 @@
     <!-- Feature End -->
 
     <!-- Best sellers, Hot Deal Start -->
-    <div class="container-xxl py-5">
-        @include('home.deal')
-    </div>
+    @include('home.deal')
     <!-- Best sellers, Hot Deal End -->
 
     <!-- Categories and Products Start -->
-    <div class="container-xxl py-5">
-        @include('home.categories')
-    </div>
+    @include('home.categories')
     <!-- Product End -->
 
     <!-- Gallery Start -->
-    <section id="gallery" class="gallery section light-background">
-        @include('home.gallery')
-    </section>
+    @include('home.gallery')
     <!-- Gallery End -->
 
     <!-- Blog Start -->
@@ -123,9 +130,7 @@
     <!-- Blog End -->
 
     <!-- Review Start -->
-    <div class="container-fluid bg-light bg-icon py-6 mb-5">
-        @include('home.review')
-    </div>
+    @include('home.review')
     <!-- Review End -->
 
     <!-- Contact Us Start -->
@@ -133,32 +138,14 @@
     <!-- Contact Us End -->
 
     <!-- Footer Start -->
-    <div class="container-fluid bg-dark footer mt-5 pt-5 wow fadeIn" data-wow-delay="0.1s">
-        @include('home.footer')
-    </div>
+    @include('home.footer')
     <!-- Footer End -->
 
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
 
-
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{asset('user')}}/lib/wow/wow.min.js"></script>
-    <script src="{{asset('user')}}/lib/easing/easing.min.js"></script>
-    <script src="{{asset('user')}}/lib/waypoints/waypoints.min.js"></script>
-    <script src="{{asset('user')}}/lib/owlcarousel/owl.carousel.min.js"></script>
-
-    <!-- Template Javascript -->
-    <script src="{{asset('user')}}/js/main.js"></script>
-    <!-- <script src="{{asset('user')}}/js/main_yummy.js"></script> -->
-
-    <!-- Vendor JS Files -->
-    <script src="{{asset('user')}}/vendor/aos/aos.js"></script>
-    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="{{asset('user')}}/vendor/swiper/swiper-bundle.min.js"></script>
+    @include('home.js')
 </body>
 
 </html>

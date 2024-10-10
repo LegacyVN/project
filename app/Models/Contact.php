@@ -11,6 +11,7 @@ class Contact extends Model
 
     protected $table = 'contacts'; // Specify the table name if different from the default
 
+    protected $primarykey = 'contact_id';
     protected $fillable = [
         'user_id',
         'contact_name',

@@ -24,35 +24,44 @@
                 </div>
             </div>
             <div class="col-lg-7 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
-                <p class="mb-4">The contact form is currently inactive. Get a functional and working contact form with Ajax & PHP in a few minutes. Just copy and paste the files, add a little code and you're done. <a href="https://htmlcodex.com/contact-form">Download Now</a>.</p>
-                <form>
+                <form method="post" action={{url("/contact-us")}}>
+                    @csrf
                     <div class="row g-3">
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="name" placeholder="Your Name">
+                                <input type="text" class="form-control" name="name" id="name" placeholder="Your Name" required>
                                 <label for="name">Your Name</label>
+                                <div class="invalid-feedback">
+                                    Please input your name
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="email" class="form-control" id="email" placeholder="Your Email">
+                                <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
                                 <label for="email">Your Email</label>
+                                <div class="invalid-feedback">
+                                    Please input a valid email
+                                </div>
                             </div>
                         </div>
-                        <div class="col-12">
+                        <!-- <div class="col-12">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="subject" placeholder="Subject">
+                                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject">
                                 <label for="subject">Subject</label>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-12">
                             <div class="form-floating">
-                                <textarea class="form-control" placeholder="Leave a message here" id="message" style="height: 200px"></textarea>
+                                <textarea class="form-control" placeholder="Leave a message here" name="message" id="message" style="height: 200px" required></textarea>
                                 <label for="message">Message</label>
+                                <div class="invalid-feedback">
+                                    Please input your Message
+                                </div>
                             </div>
                         </div>
                         <div class="col-12">
-                            <button class="btn btn-primary rounded-pill py-3 px-5" type="submit">Send Message</button>
+                            <button class="btn btn-primary rounded-pill py-3 px-5" type="submit" data-bs-toggle="modal" data-bs-target="#modalAlert">Send Message</button>
                         </div>
                     </div>
                 </form>
@@ -69,4 +78,3 @@
         frameborder="0" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
 </div>
 <!-- Google Map End -->
-
