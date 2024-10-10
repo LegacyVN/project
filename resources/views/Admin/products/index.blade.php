@@ -42,7 +42,7 @@
                             @foreach($products as $product)
                             <tr>
                                 <td>{{ $product->title }}</td> <!-- Thay name bằng title -->
-                                <td><img src="{{ asset( '/'.$product->image) }}" alt="{{ $product->title }}" style="width:100px; height:auto;"></td>
+                                <td><img src="{{ asset('products')}}/{{$product->image}}" alt="{{ $product->title }}" style="width:100px; height:auto;"></td>
                                 <td>{{ $product->price }}</td>
                                 <td>{{ $product->category->cat_name }}</td> <!-- Quan hệ với bảng categories -->
                                 <td>{{ $product->quantity }}</td>
