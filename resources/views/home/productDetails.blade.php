@@ -88,7 +88,7 @@
 									<li><a href=""><i class="fab fa-linkedin"></i></a></li>
 								</ul>
 							</div>
-							
+
 
 
 					</div>
@@ -126,18 +126,33 @@
 									<h3 class="mb-4">23 Reviews</h3>
 									<div class="review review-empty">
 										<div class="user-img" style="background-image: url(images/person_1.jpg)"></div>
-										<div class="desc">
-											<p class="star">
-												<span>
-													<i class="bi bi-star"></i>
-													<i class="bi bi-star"></i>
-													<i class="bi bi-star"></i>
-													<i class="bi bi-star"></i>
-													<i class="bi bi-star"></i>
-												</span>												
-											</p>
-											<textarea name="comment"></textarea>
-										</div>
+										<form method="post" action={{url("/contact-us")}}>
+											@csrf
+											<div class="desc row g-3">
+												<div class="col-md-6">
+													<div class="form-floating">
+														<p class="star">
+															<span>
+																<i class="bi bi-star"></i>
+																<i class="bi bi-star"></i>
+																<i class="bi bi-star"></i>
+																<i class="bi bi-star"></i>
+																<i class="bi bi-star"></i>
+															</span>
+														</p>
+														<textarea class="form-control" placeholder="Leave a review" name="review" style="height: 200px" required></textarea>
+														<div class="invalid-feedback">
+															Please input your Review
+														</div>
+														<button class="btn btn-primary rounded-pill py-2 px-3 mt-3" type="submit">Comment</button>
+													</div>
+												</div>
+												
+
+											</div>
+
+										</form>
+
 									</div>
 									<div class="review">
 										<div class="user-img" style="background-image: url(images/person_1.jpg)"></div>
@@ -161,7 +176,7 @@
 												view back on the skyline of her hometown Bookmarksgrov</p>
 										</div>
 									</div>
-									
+
 								</div>
 								<div class="col-md-4">
 									<div class="rating-wrap">
