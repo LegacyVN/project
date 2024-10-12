@@ -42,10 +42,26 @@
                             <input type="number" name="quantity" id="quantity" value="{{ old('quantity', $product->quantity) }}" class="form-control" required>
                         </div>
 
+                        <!-- Giá giảm (nếu có) -->
                         <div class="form-group mb-3">
                             <label for="discount_price">Discount Price</label>
-                            <input type="text" name="discount_price" id="discount_price" value="{{ old('discount_price', $product->discount_price) }}" class="form-control">
+                            <div class="col-sm-9">
+                                <select name="discount_price" class="form-control" id="discount_price">
+                                    <option value="0.00" selected="selected">No Discount</option>
+                                    @for($i = 0.05; $i <= 1.00; $i +=0.05)
+                                        <option value="{{ number_format($i, 2) }}" {{ $product->discount_price == $i ? 'selected' : '' }}>
+                                        {{ number_format($i * 100, 0) . "%" }}
+                                        </option>
+                                        @endfor
+                                </select>
+                                <input class="form-control mt-2" type="text" value="{{ old('discount_price', number_format($product->discount_price * 100, 0)) }}%" name="discount_price_display" placeholder="Discount Price (%)" readonly>
+                                <!-- @error('discount_price')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror -->
+                            </div>
                         </div>
+
+
 
                         <div class="form-group mb-3">
                             <label for="status">Status</label>

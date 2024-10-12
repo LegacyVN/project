@@ -10,8 +10,8 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id('order_id'); // Primary key
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Foreign key for users
-            $table->date('order_date'); // Order date
-            $table->timestamps();
+            $table->boolean('status')->default(false); // Status column (0 or 1)
+            $table->timestamps(); // Created at and updated at timestamps
         });
     }
 

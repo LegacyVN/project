@@ -5,6 +5,17 @@
             <h1 class="display-5 mb-3">Contact Us</h1>
             <p>Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed rebum vero dolor duo.</p>
         </div>
+
+        <!-- Display success message -->
+        @if (session('msg'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('msg') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        @endif
+
         <div class="row g-5 justify-content-center">
             <div class="col-lg-5 col-md-12 wow fadeInUp" data-wow-delay="0.1s">
                 <div class="bg-primary text-white d-flex flex-column justify-content-center h-100 p-5">
@@ -24,7 +35,7 @@
                 </div>
             </div>
             <div class="col-lg-7 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
-                <form method="post" action={{url("/contact-us")}}>
+                <form method="post" action="{{ url('/contact-us') }}">
                     @csrf
                     <div class="row g-3">
                         <div class="col-md-6">
@@ -45,12 +56,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="col-12">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject">
-                                <label for="subject">Subject</label>
-                            </div>
-                        </div> -->
                         <div class="col-12">
                             <div class="form-floating">
                                 <textarea class="form-control" placeholder="Leave a message here" name="message" id="message" style="height: 200px" required></textarea>
@@ -78,3 +83,8 @@
         frameborder="0" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
 </div>
 <!-- Google Map End -->
+
+<!-- Include Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

@@ -12,6 +12,10 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ContactFormMail; // Import the Mailable
+
+
 
 function ifExistsArray($array, $str)
 {
@@ -79,14 +83,14 @@ class HomeController extends Controller
         $cart = session()->get('cart', []);
         $form_quantity = (int)$request->post("form-quantity");
         debug_to_console($form_quantity);
-      
+
         if (empty($cart)) {
             $cart[] = [
                 'id' => $id,
                 'quantity' => 1
             ];
         } else {
-            if (ifExistsCart($cart, $id)) {        
+            if (ifExistsCart($cart, $id)) {
                 foreach ($cart as &$item) {
                     if ($item['id'] == $id) {
                         if ($form_quantity != NULL) {
@@ -108,7 +112,7 @@ class HomeController extends Controller
         }
 
         $request->session()->put('cart', $cart);
-        return redirect()->to('/home/index'.'/#nav-products')->with('success', 'Product Added');
+        return redirect()->to('/home/index' . '/#nav-products')->with('success', 'Product Added');
     }
 
 
@@ -137,7 +141,7 @@ class HomeController extends Controller
                     $subtotal = $subtotal + $price * $item['quantity'];
                 }
             }
-    
+
             $data = [
                 "products" => $products,
                 "quantity" => $quantity,
@@ -188,12 +192,12 @@ class HomeController extends Controller
     {
         try {
             // $product = Products::find($id);
-           $data = [
-                    "product" => Products::with("category")->find($id),
-                    "rel_products" => Products::where("id", "!=", $id)->where("category_id", $cat_id)->get(),
-                    "photo" => Photo::where("product_id", $id)->get()                
-                ];
-           
+            $data = [
+                "product" => Products::with("category")->find($id),
+                "rel_products" => Products::where("id", "!=", $id)->where("category_id", $cat_id)->get(),
+                "photo" => Photo::where("product_id", $id)->get()
+            ];
+
             if (!$data["product"]) {
                 // Handle the case when the product is not found
                 return redirect()->route("home/index")->with('error', 'Product not found');
@@ -232,26 +236,35 @@ class HomeController extends Controller
         return redirect("/home")->with('success', 'Order Completed');
     }
 
-    public function contactUs(Request $request){
-        
-        $user_id = Auth::id();
-        if(is_null($user_id)){
-            $contact = [
-                'contact_name' => $request->post('name'),
-                'contact_email' => $request->post('email'),
-                'contact_comment' => $request->post('message')
-            ];
-        }else{
-            $contact = [
-                'user_id' => $user_id,
-                'contact_name' => $request->post('name'),
-                'contact_email' => $request->post('email'),
-                'contact_comment' => $request->post('message')
-            ];
+    public function contactUs(Request $request)
+    {
+        // Validate the incoming request
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'message' => 'required|string',
+        ]);
+    
+        // Prepare the data for the email
+        $data = [
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'message' => $request->input('message'),
+        ];
+    
+        try {
+            // Send the email
+            Mail::to(env('MAIL_FROM_ADDRESS'))->send(new ContactFormMail($data));
+    
+            // Return success message and redirect back
+            return redirect()->back()->with('msg', 'Your message has been sent!');
+        } catch (\Exception $e) {
+            // Handle the exception (optional)
+            return redirect()->back()->with('msg', 'Failed to send message. Please try again later.');
         }
-        Contact::create($contact);
-        return redirect()->back();
     }
+    
+
 
     public function product_details($id)
     {

@@ -1,9 +1,9 @@
 <!-- Spinner Start -->
 <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-        <div class="spinner-border text-primary" role="status"></div>
-    </div>
-    <!-- Spinner End -->
-     
+    <div class="spinner-border text-primary" role="status"></div>
+</div>
+<!-- Spinner End -->
+
 <!-- Navbar Start -->
 <div class="container-fluid fixed-top px-0 wow fadeIn" data-wow-delay="0.1s">
     <div class="top-bar row gx-0 align-items-center d-none d-lg-flex">
@@ -48,30 +48,47 @@
                     <small class="fa fa-search text-body"></small>
                 </a>
 
+                <style>
+                    .d-flex {
+                        display: flex;
+                        align-items: center;
+                        /* Center elements vertically */
+                    }
+
+                    .nav-link {
+                        margin: 0;
+                        /* Ensure there's no margin affecting layout */
+                    }
+                </style>
+
                 <!-- Authentication Links -->
                 @if (Route::has('login'))
-                    @auth
-                        <div class="d-flex align-items-center me-3">
-                            <a href="{{ route('profile.edit') }}" class="nav-link me-2"><i class="fa fa-user"></i> {{ Auth::user()->name }}</a>
-                            <form method="POST" action="{{ route('logout') }}" style="display: inline;">
-                                @csrf
-                                <a style="color:black;" href="#" class="nav-link"
-                                   onclick="event.preventDefault(); this.closest('form').submit();">
-                                    <i class="fa fa-sign-out"></i> Logout
-                                </a>
-                            </form>
-                        </div>
-                    @else
-                        <li class="d-flex align-items-center me-3">
-                            <a href="{{ route('login') }}" class="nav-link"><i class="fa fa-user"></i> Login</a>
-                        </li>
-                        @if (Route::has('register'))
-                            <li class="d-flex align-items-center me-3">
-                                <a href="{{ route('register') }}" class="nav-link"><i class="fa fa-vcard"></i> Register</a>
-                            </li>
-                        @endif
-                    @endauth
+                @auth
+                <div class="d-flex align-items-center me-">
+                    <a href="{{ route('profile.edit') }}" class="nav-link me-2">
+                        <i class="fa fa-user"></i> {{ Auth::user()->name }}
+                    </a>
+                    <form method="POST" action="{{ route('logout') }}" class="mb-0">
+                        @csrf
+                        <a href="#" class="nav-link"
+                            onclick="event.preventDefault(); this.closest('form').submit();">
+                            <i class="fa fa-sign-out"></i> Logout
+                        </a>
+                    </form>
+                </div>
+                @else
+                <li class="d-flex align-items-center me-3">
+                    <a href="{{ route('login') }}" class="nav-link"><i class="fa fa-user"></i> Login</a>
+                </li>
+                @if (Route::has('register'))
+                <li class="d-flex align-items-center me-3">
+                    <a href="{{ route('register') }}" class="nav-link"><i class="fa fa-vcard"></i> Register</a>
+                </li>
                 @endif
+                @endauth
+                @endif
+
+
 
                 <a class="btn-sm-square bg-white rounded-circle ms-3" href="/home/cart">
                     <small class="fa fa-shopping-bag text-body"></small>
