@@ -1,33 +1,56 @@
 @extends('Admin.index')
 @section('content')
-<div class="container-fluid">
-    <!-- Index Body Start -->
+<style>
+
+    thead {
+        background-color: #f5f5f5 !important;
+    }
+    
+
+    .card-header {
+        height: 70px; 
+        background-color: #00a99d !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+    .table-hover tbody tr:hover {
+        background-color: #f0f0f0; 
+    }
+
+    .btn i {
+        vertical-align: middle;
+    }
+</style>
+
+<div class="container-fluid mt-5">
     <div class="col-12">
-        <div class="card o-hidden card-hover">
-            <div class="card-header border-0 pb-1">
-                <div class="card-header-title p-0">
-                    <h4>Products Management</h4>
-                </div>
+        <div class="card shadow-lg border-0">
+            <div class="card-header text-white">
+                <h4 class="text-center">Products Management</h4>
             </div>
-            <div class="card-body p-0">
+            <div class="card-body">
                 @if(Session::has('msg'))
-                <p class="alert alert-success">{{ session('msg') }}</p>
+                <p class="alert alert-success text-center">{{ session('msg') }}</p>
                 @endif
 
                 <div class="container mt-4">
-                    <form method="GET" action="{{ route('products.search') }}">
-                        <input type="text" name="keyword" placeholder="Search by product title" value="{{ request('keyword') }}" class="form-control">
-                        <button type="submit" class="btn btn-primary mt-2">Search</button>
+                    <form method="GET" action="{{ route('products.search') }}" class="d-flex">
+                        <input type="text" name="keyword" placeholder="Search by product title" value="{{ request('keyword') }}" class="form-control me-2">
+                        <button type="submit" class="btn btn-primary">Search</button>
                     </form>
                 </div>
 
-                <div class="container mt-4">
-                    <p style="color: black; margin-bottom: 0">Total Products: {{ $totalproducts }}</p>
+                <div class="container mt-4 text-center">
+                    <p class="fw-bold" style="color: #333;">Total Products: {{ $totalproducts }}</p>
                 </div>
 
-                <div class="container mt-4">
-                    <table class="table">
-                        <thead>
+
+                <div class="table-responsive mt-4">
+                    <table class="table table-hover table-bordered align-middle">
+                        <thead class="text-center">
                             <tr>
                                 <th>Name</th>
                                 <th>Image</th>
@@ -41,36 +64,37 @@
                         <tbody>
                             @foreach($products as $product)
                             <tr>
-                                <td>{{ $product->title }}</td> <!-- Thay name bằng title -->
-                                <td><img src="{{ asset('products')}}/{{$product->image}}" alt="{{ $product->title }}" style="width:100px; height:auto;"></td>
-                                <td>{{ $product->price }}</td>
-                                <td>{{ $product->category->cat_name }}</td> <!-- Quan hệ với bảng categories -->
-                                <td>{{ $product->quantity }}</td>
-                                <td>
+                                <td>{{ $product->title }}</td>
+                                <td class="text-center">
+                                    <img src="{{ asset('products')}}/{{$product->image}}" alt="{{ $product->title }}" class="img-fluid" style="max-width: 100px;">
+                                </td>
+                                <td class="text-center">{{ $product->price }} $</td>
+                                <td>{{ $product->category->cat_name }}</td>
+                                <td class="text-center">{{ $product->quantity }}</td>
+                                <td class="text-center">
                                     @if($product->status == true)
-                                    <span style="color: green">
-                                        <span class="material-symbols-outlined">In Stock</span>
-                                    </span>
+                                    <span class="badge bg-success">In Stock</span>
                                     @else
-                                    <span style="color: red">
-                                        <span class="material-symbols-outlined">Out Stock</span>
-                                    </span>
+                                    <span class="badge bg-danger">Out Stock</span>
                                     @endif
                                 </td>
-                                <td>
-                                    <div class="d-flex">
-                                        <a href="{{ route('products.edit', $product->id)  }}" class="btn btn-edit">
-                                            <i class="fa-solid fa-pen-to-square fa-lg" style="color: #024dcf;"></i>
+                                <td class="text-center">
+                                    <div class="d-flex justify-content-center">
+
+                                        <a href="{{ route('products.edit', $product->id) }}" class="btn btn-outline-primary btn-sm mx-1" title="Edit Product">
+                                            <i class="fas fa-edit"></i>
                                         </a>
-                                        <form action="{{ route('products.delete', $product->id) }}" method="POST" onsubmit="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');" style="display:inline;">
+
+                                        <form action="{{ route('products.delete', $product->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this product?');" class="mx-1">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-delete" style="border: none; background: none;">
-                                                <i class="fa-regular fa-trash-can" style="color: #eb0000;"></i>
+                                            <button type="submit" class="btn btn-outline-danger btn-sm mx-1" title="Delete Product">
+                                                <i class="fa-solid fa-trash"></i>
                                             </button>
                                         </form>
-                                        <a href="{{ route('product_photos.create', $product->id) }}" class="btn btn-add-image">
-                                            <i class="fa-solid fa-square-plus fa-lg" style="color: #FFD43B;"></i> 
+
+                                        <a href="{{ route('product_photos.create', $product->id) }}" class="btn btn-outline-warning btn-sm mx-1" title="Add Product Image">
+                                            <i class="fas fa-plus-square"></i>
                                         </a>
                                     </div>
                                 </td>
@@ -79,15 +103,13 @@
                         </tbody>
                     </table>
                 </div>
-
-                <div class="mt-4">
+                <div class="mt-4 d-flex justify-content-center">
                     {{ $products->onEachSide(1)->links('vendor.pagination.bootstrap-4') }}
                 </div>
-
             </div>
         </div>
     </div>
-    <!-- Index Body End -->
 </div>
+
 
 @endsection

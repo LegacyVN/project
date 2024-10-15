@@ -53,9 +53,12 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return view('admin.dashboard.index');
-    }
+        
+        $orders = Order::all();
 
+
+        return view('Admin/dashboard/index', compact('orders'));
+    }
 
     public function home()
     {
@@ -215,7 +218,7 @@ class HomeController extends Controller
         if (is_null($cart) == false || $cart != '') {
             $order = [
                 'user_id' => Auth::id(),
-                'order_date' => date('Y-m-d H:i:s')
+                'created_at' => date('Y-m-d H:i:s')
             ];
             Order::create($order);
             $latest = Order::latest()->first();
