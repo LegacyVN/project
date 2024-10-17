@@ -53,11 +53,8 @@ class HomeController extends Controller
 {
     public function index()
     {
-        
-        $orders = Order::all();
-
-
-        return view('Admin/dashboard/index', compact('orders'));
+        $orders = Order::where('status', 0)->get();
+        return view('Admin.dashboard.index', compact('orders'));
     }
 
     public function home()

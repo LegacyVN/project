@@ -8,6 +8,14 @@ use App\Models\Products;
 use Illuminate\Support\Facades\DB;
 
 class OderDetailController extends Controller   {
+
+
+    public function index()
+    {
+        $orders = Order::where('status', 1)->get();
+        return view('Admin.checked_order.index', compact('orders'));
+    }
+
     // order detail
     public function showOrderDetails($id)
 {

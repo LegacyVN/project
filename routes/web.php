@@ -68,6 +68,7 @@ Route::group(["prefix"=> "admin"], function () {
     //order
     Route::get('/{order_id}/details', [OderDetailController::class, 'showOrderDetails'])->name('order.details');
     Route::patch('/orders/confirm/{order_id}', [OderDetailController::class, 'confirm'])->name('orders.confirm');
+    Route::get('/checked_order/index', [OderDetailController::class,'index']);
 });
 
 
