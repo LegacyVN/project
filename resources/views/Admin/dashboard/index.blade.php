@@ -2,22 +2,7 @@
 
 @section('content')
 
-<style>
-    .check-details-btn {
-    background-color: #198754; 
-    color: white;            
-    padding: 8px 16px;        
-    border-radius: 5px;      
-    text-decoration: none;     
-    display: inline-block;     
-    transition: background-color 0.3s ease; 
-}
 
-.check-details-btn:hover {
-    background-color: #145a32; 
-    color: white;              
-}
-</style>
 
 <div class="container-fluid">
     <div class="row">

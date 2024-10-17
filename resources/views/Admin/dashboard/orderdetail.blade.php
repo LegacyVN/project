@@ -63,7 +63,7 @@
     @endif
     
     <br>
-    <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
+    <a href="{{ url('admin/checked_order/index') }}" class="btn btn-secondary">Back</a>
 </div>
 
 

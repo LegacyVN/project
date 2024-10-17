@@ -73,14 +73,11 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <i class="ri-store-3-line"></i>
-                            <span>Room Type</span>
+                            <span>Order</span>
                         </a>
                         <ul class="sidebar-submenu">
                             <li>
-                                <a href="{{ url('admin/view_roomtype') }}">All Room Types</a>
-                            </li>
-                            <li>
-                                <a href="{{ url('/add_roomtype') }}">Add New Room Type</a>
+                                <a href="{{ url('admin/checked_order/index') }}">Checked Order</a>
                             </li>
                         </ul>
                     </li>
