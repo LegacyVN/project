@@ -1,7 +1,24 @@
 @extends('admin.index') <!-- Assuming you have a layout file -->
 
 @section('content')
-<!-- index body start -->
+
+<style>
+    .check-details-btn {
+    background-color: #198754; 
+    color: white;            
+    padding: 8px 16px;        
+    border-radius: 5px;      
+    text-decoration: none;     
+    display: inline-block;     
+    transition: background-color 0.3s ease; 
+}
+
+.check-details-btn:hover {
+    background-color: #145a32; 
+    color: white;              
+}
+</style>
+
 <div class="container-fluid">
     <div class="row">
         <!-- chart caard section start -->
@@ -86,7 +103,7 @@
 
 <div class="container mt-5">
     <div class="card-header bg-success text-white">
-        <h2 class="text-center">Quản lý đơn hàng</h2>
+        <h2 class="text-center">Order Management</h2>
     </div>
 
     <table class="table table-bordered table-hover mt-4">
@@ -116,12 +133,17 @@
                     @endif
                 </td>
                 <td>{{ $order->created_at }}</td>
-                <td><button type="submit">check</button></td>
+                <td class="text-center">
+                    <a href="{{ route('order.details', $order->order_id) }}" class="check-details-btn">
+                        Check Details
+                    </a>
+                </td>
             </tr>
             @endforeach
         </tbody>
     </table>
 </div>
+
 
 <div class="container-fluid">
     <footer class="footer">

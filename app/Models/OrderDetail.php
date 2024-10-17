@@ -11,7 +11,7 @@ class OrderDetail extends Model
 
     protected $table = 'order_details'; // Specify the table name if needed
 
-    protected $primarykey = 'detail_id';
+    protected $primaryKey = 'detail_id';
     protected $fillable = [
         'order_id',
         'product_id',
@@ -19,15 +19,12 @@ class OrderDetail extends Model
         'quantity',
     ];
 
-    // Define a relationship with the Order model
     public function order()
     {
         return $this->belongsTo(Order::class, 'order_id', 'order_id');
     }
-
-    // Define a relationship with the Product model
     public function product()
     {
-        return $this->belongsTo(Products::class, 'product_id', 'id');
+        return $this->belongsTo(Products::class, 'product_id', 'id'); // Giả sử bảng products có cột id là khóa chính
     }
 }

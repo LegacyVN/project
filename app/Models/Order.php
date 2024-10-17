@@ -11,7 +11,7 @@ class Order extends Model
 
     protected $table = 'orders'; // Specify the table name if different from the default
 
-    protected $primarykey = "order_id";
+    protected $primaryKey = "order_id";
     protected $fillable = [
         'user_id',
         'order_date',
@@ -23,5 +23,8 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    // Optionally, you can define additional relationships, methods, or scopes here
+    public function details()
+    {
+        return $this->hasMany(OrderDetail::class, 'order_id', 'order_id');
+    }
 }

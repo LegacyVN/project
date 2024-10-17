@@ -3,8 +3,10 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OderDetailController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Models\OrderDetail;
 use Illuminate\Support\Facades\Route;
 
 
@@ -63,6 +65,9 @@ Route::group(["prefix"=> "admin"], function () {
     Route::delete('/products/{id}', [ProductController::class, 'delete'])->name('products.delete'); 
     Route::get('products/{product}/photos/create', [ProductController::class, 'createPhoto'])->name('product_photos.create');
     Route::post('products/{product}/photos', [ProductController::class, 'storePhoto'])->name('product_photos.store');
+    //order
+    Route::get('/{order_id}/details', [OderDetailController::class, 'showOrderDetails'])->name('order.details');
+    Route::patch('/orders/confirm/{order_id}', [OderDetailController::class, 'confirm'])->name('orders.confirm');
 });
 
 
