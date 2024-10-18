@@ -18,6 +18,7 @@ use App\Models\User;
 use Exception;
 use Illuminate\Container\Attributes\Log;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -102,7 +103,6 @@ public function editUser($id)
     return view('admin.user.edit_user', compact('user'));
 }
 
-// Update the user
 public function updateUser(Request $request, $id)
 {
     $request->validate([
@@ -111,16 +111,34 @@ public function updateUser(Request $request, $id)
         'phone' => 'nullable|string|max:15',
         'address' => 'nullable|string|max:255',
         'usertype' => 'required|string',
+        // Optionally add validation for 'status' if needed
     ]);
 
     $user = User::findOrFail($id);
+    
+    // Update user details
     $user->update($request->except('password')); // Exclude password from mass assignment
 
     // Optionally update password if provided
     if ($request->filled('password')) {
         $user->password = Hash::make($request->password);
-        $user->save();
     }
+
+    // Check if the admin is setting the user status to inactive
+    if ($request->has('user_status') && $request->user_status == 0) {
+        $user->user_status = 0; // Set status to inactive
+        $user->save();
+
+        // If the user is currently logged in, log them out
+        if (Auth::id() === $user->id) {
+            Auth::logout();
+            return redirect()->route('login')->with('error', 'Your account is inactive.');
+        }
+    } else {
+        $user->status = 1; // Optionally set back to active
+    }
+
+    $user->save();
 
     toastr()->closeButton()->addSuccess('User Updated Successfully');
     return redirect()->route('view_user')->with('msg', 'User updated successfully.');
