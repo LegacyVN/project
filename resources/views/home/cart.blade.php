@@ -6,11 +6,38 @@
 </head>
 
 <body>
+	<!-- Cart is Empty Model  -->
+	<div class="modal fadeInUp wow" data-wow-delay="0.0s" id="order_modal" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Notice</h5>					
+				</div>
+				@if (isset($products))
+					<div class="modal-body">
+						<p>Order Completed</p>
+					</div>
+					<div class="modal-footer">
+						<a href={{url("/order")}} class="btn btn-secondary">Close</a>
+					</div>
+				@else
+					<div class="modal-body">
+						<p>Your Cart is Empty</p>
+					</div>
+					<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					</div>
+				@endif
+				
+			</div>
+		</div>
+	</div>
+	
 	<!-- Header Start  -->
 	@include('home.header')
 	<!-- Header End   -->
 
-	<!-- breadcrumb-section -->
+	<!-- Breadcrumb Section -->
 	<div class="breadcrumb-section breadcrumb-bg">
 		<div class="container">
 			<div class="row">
@@ -23,9 +50,9 @@
 			</div>
 		</div>
 	</div>
-	<!-- end breadcrumb section -->
+	<!-- End Breadcrumb Section -->
 
-	<!-- cart -->
+	<!-- Cart -->
 	<div class="cart-section mt-150 mb-150">
 		<div class="container">
 			<div class="row">
@@ -44,62 +71,31 @@
 							</thead>
 							<tbody>
 								@if (isset($products))
-									@for ($i=0; $i<count($products); $i++)
-										<tr class="table-body-row" id="{{$products[$i]->id}}" data-prodid="{{$products[$i]->id}}" data-price="{{$final_prices[$i]}}">
-											<td class="product-remove"><a href="#"><i class="far fa-window-close"></i></a></td>
-											<td class="product-image"><a href={{url("/home/product-details/".$products[$i]->id."/".$products[$i]->category_id)}}>
-												<img src="{{asset("products")}}/{{$products[$i]->image}}" alt="">
-											</a></td>
-											<td class="product-name">{{$products[$i]->title}}</td>
-											<td class="product-price">{{"$".$final_prices[$i]}}</td>
-											<td class="product-quantity single-product-form" id={{"prod-".$products[$i]->id}}>
-												<form action={{url("/update-cart")}} method="POST">
-													@csrf
-													<input class="cart-quantity" data-comparison="{{$quantity[$i]}}" type="number" value="{{$quantity[$i]}}">
-												</form>
-											</td>
-											<td class="product-total">{{"$".$final_prices[$i] * $quantity[$i]}}</td>
-										</tr>
+								@for ($i=0; $i<count($products); $i++)
+									<tr class="table-body-row" id="{{$products[$i]->id}}" data-prodid="{{$products[$i]->id}}" data-price="{{$final_prices[$i]}}">
+									<td class="product-remove"><a href={{url("/cart/delete/".$products[$i]->id)}} onclick="return confirm('Are you sure?')"><i class="far fa-window-close"></i></a></td>
+									<td class="product-image"><a href={{url("/home/product-details/".$products[$i]->id."/".$products[$i]->category_id)}}>
+											<img src="{{asset("products")}}/{{$products[$i]->image}}" alt="">
+										</a></td>
+									<td class="product-name">{{$products[$i]->title}}</td>
+									<td class="product-price">{{"$".$final_prices[$i]}}</td>
+									<td class="product-quantity single-product-form" id={{"prod-".$products[$i]->id}}>
+										<form action={{url("/update-cart")}} method="POST">
+											@csrf
+											<input class="cart-quantity" data-comparison="{{$quantity[$i]}}" type="number" min="1" max="{{$products[$i]->quantity}}" value="{{$quantity[$i]}}">
+										</form>
+									</td>
+									<td class="product-total">{{"$".$final_prices[$i] * $quantity[$i]}}</td>
+									</tr>
 									@endfor
-								@else
-								<tr class="table-body-row">
-											Cart is empty
-								</tr>
-								@endif
-								
+									@else
+									<tr class="table-body-row">
+										Cart is empty
+									</tr>
+									@endif
+
 							</tbody>
 						</table>
-					</div>
-				</div>
-				<!-- Customer's Info  -->
-				<div class="col-lg-8">
-					<div class="checkout-accordion-wrap">
-						<div class="accordion" id="accordionExample">
-							<div class="card single-accordion">
-								<div class="card-header" id="headingOne">
-									<h5 class="mb-0">
-										<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-											Address
-										</button>
-									</h5>
-								</div>
-
-								<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-									<div class="card-body">
-										<div class="billing-address-form">
-											<form action="index.html">
-												<p><input type="text" placeholder="Name"></p>
-												<p><input type="email" placeholder="Email"></p>
-												<p><input type="text" placeholder="Address"></p>
-												<p><input type="tel" placeholder="Phone"></p>
-												<p><textarea name="bill" id="bill" cols="30" rows="10" placeholder="Say Something"></textarea></p>
-											</form>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
 					</div>
 				</div>
 
@@ -114,41 +110,31 @@
 								</tr>
 							</thead>
 							<tbody>
-							@if (isset($products))
-							<tr class="total-data">
-									<td><strong>Total: </strong></td>
-									<td class="event-subtotal" data-subtotal ={{$subtotal}}>{{"$".$subtotal}}<td>
-							</tr>
-							@else 
-							<tr class="total-data">
-									<td><strong>Total: </strong></td>
-									<td class="event-subtotal">$0<td>
-							</tr>
-							@endif
-								
-								<!-- <tr class="total-data">
-									<td><strong>Shipping: </strong></td>
-									<td class="event-shipping">0</td>
-								</tr>
+								@if (isset($products))
 								<tr class="total-data">
 									<td><strong>Total: </strong></td>
-									<td class="event-total">$0</td>
-								</tr> -->
+									<td class="event-subtotal" data-subtotal={{$subtotal}}>{{"$".$subtotal}}
+									<td>
+								</tr>
+								@else
+								<tr class="total-data">
+									<td><strong>Total: </strong></td>
+									<td class="event-subtotal">$0
+									<td>
+								</tr>
+								@endif
 							</tbody>
 						</table>
 						<div class="cart-buttons">
-							<a href="/home/cart" class="btn btn-primary rounded-pill">Update Cart</a>
-							<a href={{url("/order")}} class="btn btn-secondary rounded-pill">Order Now</a>
-						</div>
-					</div>
+							<a href={{url("home/cart")}} class="btn btn-primary rounded-pill">Refresh Cart</a>
+							@if (Auth::check())
+							<button type="button" class="btn btn-secondary rounded-pill" data-bs-toggle="modal" data-bs-target="#order_modal">
+								Order Now
+							</button>
+							@else
+							<a href={{url("/register")}} class="btn btn-secondary rounded-pill">Order Now</a>
+							@endif
 
-					<div class="coupon-section">
-						<h3>Apply Coupon</h3>
-						<div class="coupon-form-wrap">
-							<form action="index.html">
-								<p><input type="text" placeholder="Coupon"></p>
-								<p><input class="btn btn-primary rounded-pill" type="submit" value="Apply"></p>
-							</form>
 						</div>
 					</div>
 				</div>

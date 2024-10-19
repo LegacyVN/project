@@ -1,5 +1,5 @@
 <!-- Contact Start -->
-<div class="container-xxl py-6">
+<div class="container-xxl py-6" id="nav-contacts">
     <div class="container">
         <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
             <h1 class="display-5 mb-3">Contact Us</h1>
@@ -66,7 +66,7 @@
                             </div>
                         </div>
                         <div class="col-12">
-                            <button class="btn btn-primary rounded-pill py-3 px-5" type="submit" data-bs-toggle="modal" data-bs-target="#modalAlert">Send Message</button>
+                            <button class="btn btn-primary rounded-pill py-3 px-5" type="submit">Send Message</button>
                         </div>
                     </div>
                 </form>

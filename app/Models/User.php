@@ -30,10 +30,15 @@ class User extends Authenticatable implements MustVerifyEmail
         'password' => 'hashed',
     ];
 
-    // Define a relationship with the Order model
+    // Define Relationships
     public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class, "user_id");
     }
 
     

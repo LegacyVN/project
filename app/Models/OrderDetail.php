@@ -9,7 +9,7 @@ class OrderDetail extends Model
 {
     use HasFactory;
 
-    protected $table = 'order_details'; // Specify the table name if needed
+    protected $table = 'order_details'; 
 
     protected $primaryKey = 'detail_id';
     protected $fillable = [
@@ -19,6 +19,7 @@ class OrderDetail extends Model
         'quantity',
     ];
 
+    //Define Relationships
     public function order()
     {
         return $this->belongsTo(Order::class, 'order_id', 'order_id');
@@ -26,5 +27,17 @@ class OrderDetail extends Model
     public function product()
     {
         return $this->belongsTo(Products::class, 'product_id', 'id'); // Giả sử bảng products có cột id là khóa chính
+    }
+
+    //More function
+    public function count_products($products, $id)
+    {
+        $total = 0;
+        foreach ($products as $product) {
+            if ($product->product_id == $id) {
+                $total++;
+            }
+        }
+        return $total;
     }
 }

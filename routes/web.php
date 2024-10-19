@@ -14,14 +14,18 @@ Route::group(["prefix"=> ""], function () {
     Route::get("/",[HomeController::class,"home"]);
     Route::get("/home",[HomeController::class,"home"]);
     Route::get("/home/index",[HomeController::class,"home"]);
-    Route::get("/home/cart",[HomeController::class,"cart"]);
+    Route::get("/home/browse-products",[HomeController::class, "browseProducts"]);
     Route::get("/home/product-details/{id}/{cat_id}",[HomeController::class,"productDetails"]);
     Route::get("/home/save/{id}",[HomeController::class,"addToCart"]);
+    Route::get("/home/cart",[HomeController::class,"cart"]);
+    Route::get("/cart/delete/{prod_id}",[HomeController::class, "deleteCart"]);
     Route::get("/order",[HomeController::class, "order"]);
-    
+
     Route::post("/contact-us",[HomeController::class, "contactUs"]);
     Route::post("/home/save-post/{id}",[HomeController::class,"addToCart"]);
     Route::post("/update-cart",[HomeController::class, "updateCart"]);
+    Route::post("/rate/{user_id}/{product_id}", [HomeController::class, 'rate']);
+    Route::post("/filter", [HomeController::class,"filter"]);
 });
 
 
