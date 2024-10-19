@@ -19,7 +19,7 @@ class Contact extends Model
         'contact_comment',
     ];
 
-    // Define a relationship with the User model
+    //Define Relationships
     public function user()
     {
         return $this->belongsTo(User::class);

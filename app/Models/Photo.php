@@ -8,17 +8,16 @@ class Photo extends Model
 {
     use HasFactory;
 
-    protected $table = 'photos'; // Specify the table name if needed
+    protected $table = 'photos'; 
 
     protected $fillable = [
         'photo_name',
         'product_id',
     ];
 
-    // Specify the primary key
     protected $primaryKey = 'photo_id';
 
-    // Define a relationship with the Product model
+    // Define relationships
     public function product()
     {
         return $this->belongsTo(Products::class);

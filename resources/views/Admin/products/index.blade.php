@@ -23,6 +23,10 @@
     .btn i {
         vertical-align: middle;
     }
+
+    i.fas:hover{
+        color: #f0f0f0 !important;
+    }
 </style>
 
 <div class="container-fluid mt-5">
