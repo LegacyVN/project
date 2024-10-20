@@ -180,10 +180,7 @@ howwho<!DOCTYPE html>
 									<div class="desc">
 										<h4>
 											<span class="text-left">{{$review->user->name}}</span>
-											<span class="text-right">{{DateTime::createFromFormat("Y-m-d H:i:s", $review->created_at)->format("d F Y")}}
-												<span class="text-right"><a href="#" class="reply">Reply<i
-															class="bi bi-reply-fill"></i></a></span>
-											</span>
+											<span class="text-right">{{DateTime::createFromFormat("Y-m-d H:i:s", $review->created_at)->format("d F Y")}}									
 										</h4>
 										<div class="star">
 											<div class="rate-star-wrap" id="{{"rateid-".$review->rate_id}}" data-rateid="{{$review->rate_id}}" data-ratescore="{{$review->rate_score}}">

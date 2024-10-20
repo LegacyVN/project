@@ -91,15 +91,21 @@
                     </div>
                     <ul class="profile-dropdown onhover-show-div">
                         <li>
-                            <a href="{{ url('/view_user') }}">
+                            <a href="{{ url('admin/users') }}">
                                 <i data-feather="users"></i>
                                 <span>Users</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{{ url('/view_contract') }}">
-                                <i data-feather="archive"></i>
-                                <span>Contracts</span>
+                            <a href="{{ url('admin/categories') }}">
+                                <i class="ri-focus-3-line"></i>
+                                <span>Categories</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url('admin/products') }}">
+                                <i class="ri-focus-3-line"></i>
+                                <span>Products</span>
                             </a>
                         </li>
                         <li>
