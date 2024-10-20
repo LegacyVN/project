@@ -71,15 +71,10 @@
                     </li>
 
                     <li class="sidebar-list">
-                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                        <a class="sidebar-link sidebar-title" href="{{ url('admin/checked_order/index') }}">
                             <i class="ri-store-3-line"></i>
-                            <span>Order</span>
+                            <span>Checked Order</span>
                         </a>
-                        <ul class="sidebar-submenu">
-                            <li>
-                                <a href="{{ url('admin/checked_order/index') }}">Checked Order</a>
-                            </li>
-                        </ul>
                     </li>
 
 

@@ -15,7 +15,7 @@
 @endif
 <div class="container">
     <h2>Order Details for Order #{{ $order->order_id }}</h2>
-    
+
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -28,7 +28,7 @@
         </thead>
         <tbody>
             @php
-                $orderTotal = 0; 
+                $orderTotal = 0;
             @endphp
             @foreach($order->details as $detail)
             <tr>
@@ -38,7 +38,7 @@
                 <td>{{ $detail->quantity }}</td>
                 <td>{{ number_format($detail->price * $detail->quantity, 2) }} $</td>
                 @php
-                    $orderTotal += $detail->price * $detail->quantity; 
+                    $orderTotal += $detail->price * $detail->quantity;
                 @endphp
             </tr>
             @endforeach
@@ -52,19 +52,29 @@
     </table>
 
     <p><strong>Order Date:</strong> {{ $order->created_at }}</p>
-    <p><strong>Status:</strong> {{ $order->status ? 'Completed' : 'Pending' }}</p>
+    <p><strong>Status:</strong> {{ $order->status ? 'Completed' : 'Wait for confirmation' }}</p>
 
-    @if(!$order->status) 
+    @if(!$order->status)
     <form action="{{ route('orders.confirm', $order->order_id) }}" method="POST">
         @csrf
-        @method('PATCH') 
+        @method('PATCH')
         <button type="submit" class="btn btn-success">Confirm Order</button>
     </form>
     @endif
-    
+
     <br>
-    <a href="{{ url('admin/checked_order/index') }}" class="btn btn-secondary">Back</a>
+    
+    <!-- test comment -->
+    <div class="row">
+        <div class="col-md-6">
+            <a href="{{ url('admin/dashboard') }}" class="btn btn-secondary btn-block text-left"> Go to check New Order</a>
+        </div>
+        <div class="col-md-6">
+            <a href="{{ url('admin/checked_order/index') }}" class="btn btn-secondary btn-block text-right">Go to checked Order</a>
+        </div>
+    </div>
 </div>
+
 
 
 @endsection
