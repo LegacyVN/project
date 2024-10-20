@@ -29,18 +29,26 @@ class Products extends Model
         'quantity' => 'integer',
     ];
 
-    // Define a relationship with the Category model (if you have one)/
+    // Define a relationships
     public function category()
     {
         return $this->belongsTo(Categories::class);
     }
 
-    // In Products model
+
     public function photos()
     {
         return $this->hasMany(Photo::class, 'product_id'); // Ensure this uses 'product_id'
     }
 
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class, 'product_id');
+    }
 
-    // You can add additional methods or scopes here as needed
+    public function order_details()
+    {
+        return $this->hasMany(OrderDetail::class, 'product_id');
+    }
+
 }

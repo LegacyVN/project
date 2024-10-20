@@ -22,19 +22,47 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
+    // public function store(LoginRequest $request): RedirectResponse
+    // {
+    //     $request->authenticate();
+
+    //     $request->session()->regenerate();
+
+    //     if($request->user()->usertype === 'admin') //if usertype is admin then return view admin. remember to create route view and controller first
+    //     {
+    //         return redirect('admin/dashboard');
+    //     }
+
+    //     return redirect()->intended(route('dashboard'));
+    // }
+
+
     public function store(LoginRequest $request): RedirectResponse
     {
+        // Attempt to authenticate the user
         $request->authenticate();
-
+    
+        // Retrieve the authenticated user
+        $user = $request->user();
+    
+        // Check if user_status is 1
+        if ($user->user_status !== 1) {
+            // Log the user out and redirect with an error message
+            Auth::guard('web')->logout();
+            return redirect()->back()->withErrors(['user_status' => 'Your account is denied access. Please contact us via email.']);
+        }
+    
+        // Regenerate session for the authenticated user
         $request->session()->regenerate();
-
-        if($request->user()->usertype === 'admin') //if usertype is admin then return view admin. remember to create route view and controller first
-        {
+    
+        // Check user type and redirect accordingly
+        if ($user->usertype === 'admin') {
             return redirect('admin/dashboard');
         }
-
+    
         return redirect()->intended(route('dashboard'));
     }
+    
 
     /**
      * Destroy an authenticated session.

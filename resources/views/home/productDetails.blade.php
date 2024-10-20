@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+howwho<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -26,7 +26,8 @@
 	<!-- end breadcrumb-section -->
 
 	<!-- single product -->
-	<div class="single-product mt-150 mb-150">
+	
+	<div class="single-product mt-150 mb-150" id="single-product-ref">
 		<div class="container">
 			<div class="row">
 				<div class="single-product-container col-md-5">
@@ -46,53 +47,64 @@
 				<div class="col-md-7">
 					<div class="single-product-content">
 						<h3>{{$product->title}}</h3>
-						<div class="rating d-flex gap-3">
-							<p class="text-left mr-4">
-								<a href="#" class="mr-2">0.0</a>
-								<a href="#"><span class="bi bi-star"></span></a>
-								<a href="#"><span class="bi bi-star"></span></a>
-								<a href="#"><span class="bi bi-star"></span></a>
-								<a href="#"><span class="bi bi-star"></span></a>
-								<a href="#"><span class="bi bi-star"></span></a>
+						<div class="rating">
+							<p class="text-left">
+								<a href="#" class="mr-2 rating_avg">{{$reviews_avg}}</a>
+								<span class="rate-star-wrap">
+									@for ($i=0;$i<5;$i++)
+										<span>
+										<input type="checkbox" id="{{"total-score".$i+1}}" name="rate_score" value="{{$i+1}}" disabled>
+										<label class="star-label" for="{{"total-score".$i+1}}"></label>
+								</span>
+								@endfor
+								</span>
 							</p>
-							<p class="text-left mr-4">
+							@if (isset($reviews) && isset($orders_detail))
+							<p class="text-left">
+								<a href="#" class="mr-2" style="color: #000;">{{$reviews->count()}} <span style="color: #bbb;">Rating</span></a>
+							</p>
+							<p class="text-left">
+								<a href="#" class="mr-2" style="color: #000;">{{$orders_detail->count()}} <span style="color: #bbb;">Sold</span></a>
+							</p>
+							@else
+							<p class="text-left">
 								<a href="#" class="mr-2" style="color: #000;">0 <span style="color: #bbb;">Rating</span></a>
 							</p>
 							<p class="text-left">
 								<a href="#" class="mr-2" style="color: #000;">0 <span style="color: #bbb;">Sold</span></a>
 							</p>
-						</div>
-						<!-- <p class="single-product-pricing"><span>Per Kg</span> {{"$".$product->price}}</p> -->
-						@if ($product->discount_price < 1.00)
-							<p class="single-product-pricing text-primary">{{"$".$product->price - ($product->price * $product->discount_price)}}</p>
-							<p class="single-product-pricing fs-5 text-decoration-line-through">{{"$".$product->price}}</p>
-							@elseif ($product->discount_price == 1.00 || is_null($product->discount_price)==true)
-							<p class="single-product-pricing text-primary">{{"$".$product->price}}</p>
 							@endif
-							<div class="single-product-form">
-								<form method="post" action={{ url('/home/save-post/' . $product->id) }}>
-									@csrf
-									<input name="form-quantity" type="number" placeholder="0">
-									<button type="submit" class="btn btn-primary rounded-pill py-sm-2 px-sm-3">
-										<i class="fas fa-shopping-cart"></i> Add to Cart
-									</button>
-								</form>
 
-								<p><strong>Category: </strong>{{$product->category->cat_name}}</p>
-								<hr>
-								<h4>Share:</h4>
-								<ul class="product-share">
-									<li><a href=""><i class="fab fa-facebook-f"></i></a></li>
-									<li><a href=""><i class="fab fa-twitter"></i></a></li>
-									<li><a href=""><i class="fab fa-google-plus-g"></i></a></li>
-									<li><a href=""><i class="fab fa-linkedin"></i></a></li>
-								</ul>
-							</div>
+						</div>
+						
+						@if ($product->discount_price > 0.00)
+						<p class="single-product-pricing text-primary">{{"$".$product->price - ($product->price * $product->discount_price)}}</p>
+						<p class="single-product-pricing fs-5 text-decoration-line-through">{{"$".$product->price}}</p>
+						@else
+						<p class="single-product-pricing text-primary">{{"$".$product->price}}</p>
+						@endif
+						<div class="single-product-form">
+							<form method="post" action={{ url('/home/save-post/' . $product->id) }}>
+								@csrf
+								<input name="form-quantity" type="number" min="1" max="{{$product->quantity}}" placeholder="1">
+								<p>In Stock: {{$product->quantity}}</p>
+								<button type="submit" class="btn btn-primary rounded-pill py-sm-2 px-sm-3">
+									<i class="fas fa-shopping-cart"></i> Add to Cart
+								</button>
+							</form>
 
-
-
+							<p><strong>Category: </strong>{{$product->category->cat_name}}</p>
+							<hr>
+							<h4>Share:</h4>
+							<ul class="product-share">
+								<li><a href=""><i class="fab fa-facebook-f"></i></a></li>
+								<li><a href=""><i class="fab fa-twitter"></i></a></li>
+								<li><a href=""><i class="fab fa-google-plus-g"></i></a></li>
+								<li><a href=""><i class="fab fa-linkedin"></i></a></li>
+							</ul>
+						</div>
 					</div>
-
+				
 				</div>
 			</div>
 			<!-- review row  -->
@@ -114,130 +126,140 @@
 							aria-labelledby="day-1-tab">
 							<div class="p-4">
 								<p>{{$product->description}}</p>
-								<h3 class="mb-4">Enhance Your Dishes with the Aromatic Blend of Surya Garam Masala</h3>
-								<p>Prepare to embark on a flavourful journey like no other with Surya Garam Masala, a spice blend that encapsulates the very essence of Indian cuisine. Crafted using age-old recipes from the heart of Indian kitchens, this aromatic masterpiece is your ticket to unparalleled flavour and culinary excellence. </p>
+								<h3 class="mb-4">Enhance Your Dishes with the Aromatic Blend of Masala</h3>
+								<p>Prepare to embark on a flavourful journey like no other with Masala, a spice blend that encapsulates the very essence of Indian cuisine. Crafted using age-old recipes from the heart of Indian kitchens, this aromatic masterpiece is your ticket to unparalleled flavour and culinary excellence. </p>
 								<h4>Aromatic Perfection:</h4>
 								<p>Surya Authentic Garam Masala Powder is a testament to our commitment to quality. It is prepared from highly aromatic spices that are handpicked for their superior fragrance and flavour. With every pinch, you'll experience the delightful aroma of a harmonious blend of 21 spices, carefully balanced to perfection. </p>
 							</div>
 						</div>
 						<div class="tab-pane fade" id="v-pills-3" role="tabpanel" aria-labelledby="v-pills-day-3-tab">
 							<div class="row p-4">
+								<!-- Main Rating Body  -->
 								<div class="col-md-7">
-									<h3 class="mb-4">23 Reviews</h3>
-									<div class="review review-empty">
-										<div class="user-img" style="background-image: url(images/person_1.jpg)"></div>
-										<form method="post" action={{url("/contact-us")}}>
+									<!-- Reviews Count  -->
+									@if (isset($reviews))
+									<h3 class="mb-4">{{$reviews->count()." Reviews "}}</h3>
+									@else
+									<h3 class="mb-4">0 Review</h3>
+									@endif
+
+									<!-- Empty Review Box -->
+									@if (isset($orders_detail) && Auth::check())
+									@foreach ($orders_detail as $order_detail)
+									@if ($order_detail->order->user_id == Auth::id() && $review_validity == true)
+									<div class="review review-empty" data-authid="{{Auth::id()}}">
+									<div class="flex-shrink-0 rounded-circle" src="{{asset('user')}}/img/avatar.png"></div>
+										<form method="post" action="{{ url('rate/' . Auth::id() . '/' . $order_detail->product_id) }}">
 											@csrf
 											<div class="desc row g-3">
 												<div class="col-md-6">
 													<div class="form-floating">
-														<p class="star">
-															<span>
-																<i class="bi bi-star"></i>
-																<i class="bi bi-star"></i>
-																<i class="bi bi-star"></i>
-																<i class="bi bi-star"></i>
-																<i class="bi bi-star"></i>
-															</span>
-														</p>
-														<textarea class="form-control" placeholder="Leave a review" name="review" style="height: 200px" required></textarea>
-														<div class="invalid-feedback">
-															Please input your Review
-														</div>
-														<button class="btn btn-primary rounded-pill py-2 px-3 mt-3" type="submit">Comment</button>
+														<div class="rate-star-wrap">
+															@for ($i=0;$i<5;$i++)
+																<div><input type="checkbox" id="{{"score".$i+1}}" name="rate_score" value="{{$i+1}}">
+																<label class="star-label" for="{{"score".$i+1}}"></label></div>
+														@endfor
 													</div>
+													<textarea class="form-control" placeholder="Leave a review" name="rate_comment" required></textarea>
+													<div class="invalid-feedback">Please input your Review</div>
+													<button class="btn btn-primary rounded-pill py-2 px-3 mt-3" type="submit">Comment</button>
 												</div>
-												
-
 											</div>
-
-										</form>
-
 									</div>
-									<div class="review">
-										<div class="user-img" style="background-image: url(images/person_1.jpg)"></div>
-										<div class="desc">
-											<h4>
-												<span class="text-left">Jacob Webb</span>
-												<span class="text-right">14 March 2018</span>
-											</h4>
-											<p class="star">
-												<span>
-													<i class="bi bi-star"></i>
-													<i class="bi bi-star"></i>
-													<i class="bi bi-star"></i>
-													<i class="bi bi-star"></i>
-													<i class="bi bi-star"></i>
-												</span>
-												<span class="text-right"><a href="#" class="reply"><i
+									</form>
+
+								</div>
+								@break
+								@endif
+								@endforeach
+								@endif
+								<!-- The Reviews  -->
+								@if (isset($reviews))
+								@foreach ($reviews as $review)
+								<div class="review reviewed">
+									<div class="desc">
+										<h4>
+											<span class="text-left">{{$review->user->name}}</span>
+											<span class="text-right">{{DateTime::createFromFormat("Y-m-d H:i:s", $review->created_at)->format("d F Y")}}
+												<span class="text-right"><a href="#" class="reply">Reply<i
 															class="bi bi-reply-fill"></i></a></span>
-											</p>
-											<p>When she reached the first hills of the Italic Mountains, she had a last
-												view back on the skyline of her hometown Bookmarksgrov</p>
+											</span>
+										</h4>
+										<div class="star">
+											<div class="rate-star-wrap" id="{{"rateid-".$review->rate_id}}" data-rateid="{{$review->rate_id}}" data-ratescore="{{$review->rate_score}}">
+												@for ($i=0;$i<5;$i++)
+													<div>
+													<input type="checkbox" id="{{"scored".$i+1}}" name="rate_score" value="{{$i+1}}" disabled>
+													<label class="star-label" for="{{"scored".$i+1}}"></label>
+											</div>
+											@endfor
 										</div>
 									</div>
-
+									<p>{{$review->rate_comment}}</p>
 								</div>
-								<div class="col-md-4">
-									<div class="rating-wrap">
-										<h3 class="mb-4">{{$product->title."'s Rating Overview"}}</h3>
-										<p class="star">
-											<span>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												(98%)
-											</span>
-											<span>20 Reviews</span>
-										</p>
-										<p class="star">
-											<span>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												(85%)
-											</span>
-											<span>10 Reviews</span>
-										</p>
-										<p class="star">
-											<span>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												(98%)
-											</span>
-											<span>5 Reviews</span>
-										</p>
-										<p class="star">
-											<span>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												(98%)
-											</span>
-											<span>0 Reviews</span>
-										</p>
-										<p class="star">
-											<span>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												(98%)
-											</span>
-											<span>0 Reviews</span>
-										</p>
-									</div>
-								</div>
+							</div>
+							@endforeach
+							@endif
+						</div>
+						<!-- Rating Overview  -->
+						<div class="col-md-4">
+							<div class="rating-wrap">
+								<h3 class="mb-4">{{$product->title."'s Rating Overview"}}</h3>
+								<p class="star">
+									<span>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										({{$reviews_overview[1][4] . "%"}})
+									</span>
+									<span>{{$reviews_overview[0][4] . " Reviews"}}</span>
+								</p>
+								<p class="star">
+									<span>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star"></i>
+										({{$reviews_overview[1][3] . "%"}})
+									</span>
+									<span>{{$reviews_overview[0][3] . " Reviews"}}</span>
+								</p>
+								<p class="star">
+									<span>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star"></i>
+										<i class="bi bi-star"></i>
+										({{$reviews_overview[1][2] . "%"}})
+									</span>
+									<span>{{$reviews_overview[0][2] . " Reviews"}}</span>
+								</p>
+								<p class="star">
+									<span>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star"></i>
+										<i class="bi bi-star"></i>
+										<i class="bi bi-star"></i>
+										({{$reviews_overview[1][1] . "%"}})
+									</span>
+									<span>{{$reviews_overview[0][1] . " Reviews"}}</span>
+								</p>
+								<p class="star">
+									<span>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star"></i>
+										<i class="bi bi-star"></i>
+										<i class="bi bi-star"></i>
+										<i class="bi bi-star"></i>
+										({{$reviews_overview[1][0] . "%"}})
+									</span>
+									<span>{{$reviews_overview[0][0] . " Reviews"}}</span>
+								</p>
 							</div>
 						</div>
 					</div>
@@ -245,12 +267,9 @@
 			</div>
 		</div>
 	</div>
+	</div>
+	</div>
 	<!-- end single product -->
-
-	<!-- review section start -->
-
-
-	<!-- review section end -->
 
 	<!-- more products -->
 	<div class="more-products mb-150">
@@ -272,7 +291,7 @@
 						</div>
 						<h3>{{$rel_product->title}}</h3>
 						<p class="product-price">{{"$".$rel_product->price}} </p>
-						<a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+						<a href="{{"/home/save/".$rel_product->id}}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
 					</div>
 				</div>
 				@endforeach

@@ -1,30 +1,36 @@
 (function ($) {
     "use strict";
-    //Sale box
-    // $("#nav-products").on("load", function(){
-    //     console.log("found1");
-    //     if($(this).find(".prod-sale").each(function(){
-    //         console.log("found");
-    //         if($(this).data("discount")<1.00){
-    //             $(this).css("visibility", "visible");
-    //         }
-    //     }))
-    //     $(this).find(".prod-sale").css('visibility')
-
-    // });
+    //function to show the rating stars next to average rating score in productDetails.blade
+    function averageStar() {
+        var score = $("div.rating .rating_avg").html();
+        console.log(score);
+        $("span.rate-star-wrap input").each(function () {
+            var score = $("div.rating .rating_avg").html();
+            var int = score.split('.')[0]
+            var decimal = "0." + score.split('.')[1];
+            for (var i = 0; i < score; i++) {
+                console.log("loop");
+                // $("span.rate-star-wrap input#total-score" + (i + 1)).prop('checked', true);
+                if (score - i != decimal) {
+                    $("span.rate-star-wrap input#total-score" + (i + 1)).prop('checked', true);
+                } else if (score - i == decimal) {
+                    let label = $("label[for='total-score" + (i + 1) + "']");
+                    label.removeClass("star-label");
+                    label.addClass("star-label-avg");
+                    $("span.rate-star-wrap input#total-score" + (i + 1)).prop('checked', true);
+                }
+            }
+        });
+    };
 
     $(document).ready(function () {
         $(".prod-sale").each(function () {
-            if ($(this).data("discount") < 1.00) {
+            if ($(this).data("discount") > 0.00) {
                 $(this).css("visibility", "visible");
             }
         });
-        $("li.nav-item#1>a").addClass("active");
+        averageStar();
        
-    });
-
-    $("div#nav-products").on("load", function () {
-        console.log("found1");
     });
 
     // Spinner
@@ -38,7 +44,8 @@
     spinner();
 
     //Initiate the "active" status of tabs
-    $("div#cat-tab-1").addClass("active");
+    $("li.nav-item#0>a").addClass("active");
+    $("div#cat-tab-0").addClass("active");
 
     // Initiate the wowjs
     new WOW().init();
@@ -46,18 +53,10 @@
 
     // Fixed Navbar
     $(window).scroll(function () {
-        if ($(window).width() < 992) {
-            if ($(this).scrollTop() > 45) {
-                $('.fixed-top').addClass('bg-white shadow');
-            } else {
-                $('.fixed-top').removeClass('bg-white shadow');
-            }
+        if ($(this).scrollTop() > 45) {
+            $('.fixed-top').css('top', -45);
         } else {
-            if ($(this).scrollTop() > 45) {
-                $('.fixed-top').addClass('bg-white shadow').css('top', -45);
-            } else {
-                $('.fixed-top').removeClass('bg-white shadow').css('top', 0);
-            }
+            $('.fixed-top').css('top', 0);
         }
     });
 
@@ -135,13 +134,13 @@
         $("div.single-product-img>img").attr("src", $(this).attr('src'));
     });
 
-    //Cart
+    //----Cart Related-------
+    //function to update cart in the session when quantity is changed
     function updateCart(productId, newQuantity) {
         fetch('/update-cart', {
             method: 'POST', // Using POST method
             headers: {
                 'Content-Type': 'application/json',
-                // 'X-CSRF-TOKEN' : "{{csrf_token}}"
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Add CSRF token for security
             },
             body: JSON.stringify({
@@ -163,6 +162,7 @@
        
     }
 
+    //Update total price of cart in real-time
     $(".table-body-row").each(function () {
         var price = $(this).data("price");
         var prod_id = $(this).data("prodid");
@@ -184,8 +184,6 @@
                 } else {
                     
                 }
-
-                // subtotal += Number(total);
                 $(this).closest(".table-body-row").find(".product-total").html("$" + total);
                 $(this).closest(".row").find(".event-subtotal").html("$" + new_subtotal);
                 $(this).closest(".row").find(".event-subtotal").data("subtotal", new_subtotal);
@@ -196,6 +194,43 @@
         });
     });
 
+    // Star rating empty box
+    $("div.rate-star-wrap input").each(function () {
+        $(this).on("click", function () {
+            for (var i = 0; i < 5; i++) {
+                $("div.rate-star-wrap input#score" + (i + 1)).prop('checked', false);
+            }
+            for (i = 0; i < $(this).val(); i++) {
+                console.log(i + 1);
+                $("div.rate-star-wrap input#score" + (i + 1)).prop('checked', true);
+            }
+        });
+    });
+
+    // Star rating actual review
+    $("#v-pills-3-tab").on("click", function () {
+        $("div.reviewed .rate-star-wrap").each(function () {
+            var score = $(this).data("ratescore");
+            var rateid = $(this).data("rateid");
+            console.log("score " + score);
+            console.log("rateid " + rateid);
+            for (var i = 0; i < score; i++) {
+                $("div.reviewed .rate-star-wrap#rateid-" + rateid + " input#scored" + (i + 1)).prop('checked', true);
+            }
+            // for(var i=0; i<score; i++){
+            //     $("div.review .rate-star-wrap input#scored"+i).prop('disabled', true);
+            // }
+        });
+    });
+
+    $(".nav-item").each(function () {
+        $(this).on("click", function () {
+           var category = $(this).attr('id');
+           $("input.filter-cat").each(function(){
+            $(this).val(category);
+           })
+        })
+    })
 
 
 })(jQuery);
@@ -241,8 +276,7 @@
     //     selector: '.glightbox'
     // });
 
-
-    // Magnifier 
+    // Magnifier in productDetails.blade.php
     document.addEventListener("DOMContentLoaded", function() {
         const magnifier = document.getElementById("magnifier");
         const img = document.getElementById("product-image"); 

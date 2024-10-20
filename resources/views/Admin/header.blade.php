@@ -20,7 +20,7 @@
                 <div class="Typeahead Typeahead--twitterUsers">
                     <div class="u-posRelative">
                         <input class="demo-input Typeahead-input form-control-plaintext w-100" type="text"
-                               placeholder="Search Fastkart .." name="q" title="" autofocus>
+                            placeholder="Search Fastkart .." name="q" title="" autofocus>
                         <i class="close-search" data-feather="x"></i>
                         <div class="spinner-border Typeahead-spinner" role="status">
                             <span class="sr-only">Loading...</span>
@@ -103,17 +103,21 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ url('support-ticket.html') }}">
+                            <a href="{{ route('profile.edit') }}">
                                 <i data-feather="phone"></i>
                                 <span>{{ __('Profile') }}</span>
                             </a>
                         </li>
                         <li>
-                            <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" href="javascript:void(0)">
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <i data-feather="log-out"></i>
                                 <span>{{ __('Log Out') }}</span>
                             </a>
                         </li>
+
                     </ul>
                 </li>
             </ul>

@@ -11,22 +11,33 @@ class Rating extends Model
 
     protected $table = 'ratings'; // Specify the table name if needed
 
+    protected $primarykey = "rate_id";
     protected $fillable = [
         'rate_comment',
         'rate_score',
         'user_id',
         'product_id',
+        'created_at'
     ];
 
-    // Define a relationship with the User model
+    // Define Relationships
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, "user_id");
     }
 
-    // Define a relationship with the Product model
     public function product()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Products::class, 'product_id');
+    }
+
+    // More function
+
+    public function checkUser($user_id)
+    {
+        if($this->user_id == $user_id){
+            return true;
+        }
+        return false;
     }
 }

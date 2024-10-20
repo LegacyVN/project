@@ -15,9 +15,10 @@ class Order extends Model
     protected $fillable = [
         'user_id',
         'order_date',
+        'status'
     ];
 
-    // Define a relationship with the User model
+    //Define Relationships
     public function user()
     {
         return $this->belongsTo(User::class);

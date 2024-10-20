@@ -3,9 +3,29 @@
     <div class="spinner-border text-primary" role="status"></div>
 </div>
 <!-- Spinner End -->
+<!-- Session Message Start -->
+@if (session('msg'))
+<div class="alert alert-info alert-dismissible fade show custom-alert">
+    {{ session('msg') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
+@if (session('error'))
+<div class="alert alert-danger alert-dismissible fade show custom-alert" role="alert">
+    {{ session('error') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
+@if (session('success'))
+<div class="alert alert-success alert-dismissible fade show custom-alert">
+    {{ session('success') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
+<!-- Session Message End -->
 
 <!-- Navbar Start -->
-<div class="container-fluid fixed-top px-0 wow fadeIn" data-wow-delay="0.1s">
+<div class="container-fluid fixed-top px-0 wow fadeIn bg-white" data-wow-delay="0.1s">
     <div class="top-bar row gx-0 align-items-center d-none d-lg-flex">
         <div class="col-lg-6 px-5 text-start">
             <small><i class="fa fa-map-marker-alt me-2"></i>123 Street, New York, USA</small>
@@ -20,9 +40,12 @@
         </div>
     </div>
 
-    <nav class="navbar navbar-expand-lg navbar-light py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
-        <a href="/home/index" class="navbar-brand ms-4 ms-lg-0">
-            <h1 class="fw-bold text-primary m-0">F<span class="text-secondary">oo</span>dy</h1>
+    <nav class="navbar navbar-expand-lg navbar-light py-lg-0 px-lg-5 wow fadeIn shadow" data-wow-delay="0.1s">
+        <div class="navbar-brand ms-4 ms-lg-0">
+            <a href="/home/index">
+                <img src="{{asset('user')}}/img/logo.png" class="brand-logo" alt="logo">
+            </a>
+        </div>
         </a>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
@@ -30,18 +53,16 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
                 <a href="#nav-home" class="nav-item nav-link active">Home</a>
-                <a href="#nav-about-us" class="nav-item nav-link">About Us</a>
-                <a href="#nav-products" class="nav-item nav-link">Products</a>
+                <a href={{url("home#nav-about-us")}} class="nav-item nav-link">About Us</a>
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Products</a>
                     <div class="dropdown-menu m-0">
-                        <a href="blog.html" class="dropdown-item">Blog Grid</a>
-                        <a href="feature.html" class="dropdown-item">Our Features</a>
-                        <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                        <a href="404.html" class="dropdown-item">404 Page</a>
+                        <a href={{url("home#nav-featured")}} class="dropdown-item">Featured</a>
+                        <a href={{url("home/browse-products")}} class="dropdown-item">Browse Products</a>
                     </div>
                 </div>
-                <a href="contact.html" class="nav-item nav-link">Contact Us</a>
+                <a href={{url("home#gallery")}} class="nav-item nav-link">Gallery</a>
+                <a href={{url("home#nav-contacts")}} class="nav-item nav-link">Contact Us</a>
             </div>
             <div class="d-none d-lg-flex align-items-center ms-2">
                 <a class="btn-sm-square bg-white rounded-circle ms-3" href="">
@@ -88,9 +109,7 @@
                 @endauth
                 @endif
 
-
-
-                <a class="btn-sm-square bg-white rounded-circle ms-3" href="/home/cart">
+                <a class="btn-sm-square bg-white rounded-circle ms-3" href="{{url("/home/cart")}}">
                     <small class="fa fa-shopping-bag text-body"></small>
                 </a>
             </div>

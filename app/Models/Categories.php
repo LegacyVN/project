@@ -13,8 +13,10 @@ class Categories extends Model
     protected $primarykey = "id";
     protected $fillable = [
         'cat_name',
+        'created_at'
     ];
 
+    //Define Relationships
     public function products()
     {
         return $this->hasMany(Products::class);
