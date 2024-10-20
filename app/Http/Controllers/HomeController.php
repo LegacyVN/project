@@ -453,26 +453,17 @@ class HomeController extends Controller
     // ------Functions related to shop.blade.php-----------
     public function browseProducts()
     {
-        //New Products
-        $sevenDaysAgo = date('Y-m-d H:i:s', strtotime('-7 days'));
-        $now = date('Y-m-d H:i:s');
-        $dis_products = Products::where('discount_price', '>', 0.00)->get();
-        $new_products =  Products::whereBetween('created_at', [$sevenDaysAgo, $now])->get();
-
-        $data = [
-            "products" => Products::get(),
-            "categories" => Categories::get()
-        ];
-
-        if ($dis_products->isNotEmpty()) {
-            $data["dis_products"] = $dis_products;
+        try{
+            $data = [
+                "products" => Products::get(),
+                "categories" => Categories::get()
+            ];
+            return view("home/shop")->with($data);
         }
-        if ($new_products->isNotEmpty()) {
-            $data["new_products"] = $new_products;
-        }
-
-
-        return view("home/shop")->with($data);
+        catch(Exception $ex){
+            return redirect()->back()->with("error", "Something is wrong");
+        }       
+     
     }
     //Executed when using filter and sort in shop.blade.php
     public function filter(Request $request)
