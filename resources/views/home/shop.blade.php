@@ -35,7 +35,7 @@
 <div class="product-section mt-150 mb-150">
     <div class="container">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="product-filters">
                     <h4 class="d-block text-left mt-150">Categories</h4>                   
                     <div class="col-lg-12 text-start text-lg-start">
@@ -53,7 +53,7 @@
 
                 </div>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-8">
                 @if (Session::has("msg"))
                 {{Session::get("msg")}}
                 @endif
@@ -83,28 +83,6 @@
                     </div>                  
                 </div>
             </div>
-            <!-- <div class="col-md-2">
-                @if (Session::has("msg"))
-                {{Session::get("msg")}}
-                @endif
-                <div class="product-filters">
-                    <h4 class="d-block text-left mt-150">Sort</h4>
-                    <div class="col-lg-12 text-start text-lg-start">
-                        <form id="filter-sort-form" method="post" action="{{ url('/sort') }}">
-                            @csrf
-                            <select name="filter-sort" id="filter-sort">
-                                <option value="0">All</option>
-                                <option value="1" {{old('filter-sort') == '1' ? 'selected' : '' }}>A to Z</option>
-                                <option value="2" {{old("filter-sort") == "2" ? 'selected' : ''}}>Z to A</option>
-                                <option value="3" {{old("filter-sort") == "3" ? 'selected' : ''}}>Lowest Price</option>
-                                <option value="4" {{old("filter-sort") == "4" ? 'selected' : ''}}>Highest Price</option>
-                                
-                            </select>
-                            <input type="text" class="filter-cat hidden" name="filter-cat" value="0">
-                        </form>
-                    </div>
-                </div>
-            </div> -->
         </div>
 
         <div class="row tab-content">

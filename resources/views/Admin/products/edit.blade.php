@@ -30,6 +30,7 @@
                         <div class="form-group mb-3">
                             <label for="image">Image</label>
                             <input type="text" name="image" id="image" value="{{ old('image', $product->image) }}" class="form-control" required>
+                            
                         </div>
 
                         <div class="form-group mb-3">

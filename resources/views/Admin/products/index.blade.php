@@ -72,7 +72,7 @@
                                 <td class="text-center">
                                     <img src="{{ asset('products')}}/{{$product->image}}" alt="{{ $product->title }}" class="img-fluid" style="max-width: 100px;">
                                 </td>
-                                <td class="text-center">{{ $product->price }} $</td>
+                                <td class="text-center">${{ $product->price }}</td>
                                 <td>{{ $product->category->cat_name }}</td>
                                 <td class="text-center">{{ $product->quantity }}</td>
                                 <td class="text-center">

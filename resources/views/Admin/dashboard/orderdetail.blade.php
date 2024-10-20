@@ -34,9 +34,9 @@
             <tr>
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $detail->product->title }}</td>
-                <td>{{ number_format($detail->price, 2) }} $</td>
+                <td>${{ number_format($detail->price, 2) }}</td>
                 <td>{{ $detail->quantity }}</td>
-                <td>{{ number_format($detail->price * $detail->quantity, 2) }} $</td>
+                <td>${{ number_format($detail->price * $detail->quantity, 2) }}</td>
                 @php
                     $orderTotal += $detail->price * $detail->quantity;
                 @endphp
@@ -46,7 +46,7 @@
         <tfoot>
             <tr>
                 <td colspan="4" class="text-right"><strong>Total Order Amount:</strong></td>
-                <td><strong>{{ number_format($orderTotal, 2) }} VND</strong></td>
+                <td><strong>${{ number_format($orderTotal, 2) }}</strong></td>
             </tr>
         </tfoot>
     </table>

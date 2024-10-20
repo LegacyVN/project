@@ -64,5 +64,11 @@
             background-color: #145a32;
             color: white;
         }
+
+        .custom-alert {
+            z-index: 9999999;            
+            position: relative;
+            opacity: 1 !important;        
+        }
     </style>
 </head>

@@ -69,6 +69,9 @@ Route::group(["prefix"=> "admin"], function () {
     Route::delete('/products/{id}', [ProductController::class, 'delete'])->name('products.delete'); 
     Route::get('products/{product}/photos/create', [ProductController::class, 'createPhoto'])->name('product_photos.create');
     Route::post('products/{product}/photos', [ProductController::class, 'storePhoto'])->name('product_photos.store');
+    Route::get('/products/photos', [ProductController::class, 'listPhotos'])->name('product_photos.index');
+    Route::get('/products/photos/search', [ProductController::class, 'searchPhotos'])->name('product_photos.search');
+    Route::delete('/products/photos/delete/{photo_id}', [ProductController::class, 'deletePhoto'])->name('product_photos.deletePhoto');
     //order
     Route::get('/{order_id}/details', [OderDetailController::class, 'showOrderDetails'])->name('order.details');
     Route::patch('/orders/confirm/{order_id}', [OderDetailController::class, 'confirm'])->name('orders.confirm');
