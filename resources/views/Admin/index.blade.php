@@ -15,6 +15,26 @@
         <!-- Page Header Start-->
         @include('admin.header')
         <!-- Page Header Ends-->
+        <!-- Page Message Alert Start  -->
+        @if (session('msg'))
+        <div class="alert alert-info alert-dismissible fade show custom-alert">
+            {{ session('msg') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
+        @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show custom-alert" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
+        @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show custom-alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
+        <!-- Page Message Alert End  -->
 
         <!-- Page Body Start-->
         <div class="page-body-wrapper">

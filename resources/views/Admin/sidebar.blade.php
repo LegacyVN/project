@@ -65,6 +65,9 @@
                                 <a href="{{ url('admin/products') }}">All Products</a>
                             </li>
                             <li>
+                                <a href="{{ url('admin/products/photos') }}">All Products' Photos</a>
+                            </li>
+                            <li>
                                 <a href="{{ url('admin/products/create') }}">Add New Product</a>
                             </li>
                         </ul>
