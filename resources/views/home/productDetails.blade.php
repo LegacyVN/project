@@ -1,4 +1,5 @@
-howwho<!DOCTYPE html>
+howwho
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -26,7 +27,7 @@ howwho<!DOCTYPE html>
 	<!-- end breadcrumb-section -->
 
 	<!-- single product -->
-	
+
 	<div class="single-product mt-150 mb-150" id="single-product-ref">
 		<div class="container">
 			<div class="row">
@@ -76,7 +77,7 @@ howwho<!DOCTYPE html>
 							@endif
 
 						</div>
-						
+
 						@if ($product->discount_price > 0.00)
 						<p class="single-product-pricing text-primary">{{"$".$product->price - ($product->price * $product->discount_price)}}</p>
 						<p class="single-product-pricing fs-5 text-decoration-line-through">{{"$".$product->price}}</p>
@@ -104,7 +105,7 @@ howwho<!DOCTYPE html>
 							</ul>
 						</div>
 					</div>
-				
+
 				</div>
 			</div>
 			<!-- review row  -->
@@ -148,7 +149,7 @@ howwho<!DOCTYPE html>
 									@foreach ($orders_detail as $order_detail)
 									@if ($order_detail->order->user_id == Auth::id() && $review_validity == true)
 									<div class="review review-empty" data-authid="{{Auth::id()}}">
-									<div class="flex-shrink-0 rounded-circle" src="{{asset('user')}}/img/avatar.png"></div>
+										<div class="flex-shrink-0 rounded-circle" src="{{asset('user')}}/img/avatar.png"></div>
 										<form method="post" action="{{ url('rate/' . Auth::id() . '/' . $order_detail->product_id) }}">
 											@csrf
 											<div class="desc row g-3">
@@ -180,7 +181,7 @@ howwho<!DOCTYPE html>
 									<div class="desc">
 										<h4>
 											<span class="text-left">{{$review->user->name}}</span>
-											<span class="text-right">{{DateTime::createFromFormat("Y-m-d H:i:s", $review->created_at)->format("d F Y")}}									
+											<span class="text-right">{{DateTime::createFromFormat("Y-m-d H:i:s", $review->created_at)->format("d F Y")}}
 										</h4>
 										<div class="star">
 											<div class="rate-star-wrap" id="{{"rateid-".$review->rate_id}}" data-rateid="{{$review->rate_id}}" data-ratescore="{{$review->rate_score}}">
@@ -281,15 +282,36 @@ howwho<!DOCTYPE html>
 			</div>
 			<div class="row justify-content-center">
 				@foreach ($rel_products as $rel_product)
-				<div class="col-lg-4 col-md-6 text-center">
-					<div class="single-product-item">
-						<div class="product-image">
-							<a href={{"/home/product-details/".$rel_product->id."/".$rel_product->category_id}}><img src="{{asset("products")}}/{{$rel_product->image}}" alt=""></a>
+				<div class="col-xl-3 col-lg-4 col-md-6 text-center">
+					<div class="product-item">
+						<div class="position-relative bg-light overflow-hidden">
+							<img class="{{asset('user')}}/img-fluid w-100" src="{{asset("products")}}/{{$rel_product->image}}" alt="">
+							<div class="bg-secondary prod-new rounded text-white position-absolute start-0 top-0 m-2 py-1 px-3">New</div>
+							<div class="bg-danger prod-sale rounded text-white position-absolute end-0 top-0 py-1 px-2" data-discount="{{$rel_product->discount_price}}">{{"-" . $rel_product->discount_price*100 . "%"}}</div>
 						</div>
-						<h3>{{$rel_product->title}}</h3>
-						<p class="product-price">{{"$".$rel_product->price}} </p>
-						<a href="{{"/home/save/".$rel_product->id}}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-					</div>
+						<div class="text-center p-4">
+							<a class="d-block h5 mb-2" href={{"/home/product-details/".$rel_product->id."/".$rel_product->category_id}}>{{$rel_product->title}}</a>
+							@if ($rel_product->discount_price == 0.00 || $rel_product->discount_price == '')
+							<span class="text-primary me-1">{{"$".$rel_product->price}}</span>
+							@else
+							<span class="text-primary me-1">{{"$".$rel_product->price - ($rel_product->price * $rel_product->discount_price)}}</span>
+							<span class="text-body text-decoration-line-through">{{"$".$rel_product->price}}</span>
+							@endif							
+						</div>
+						<div class="d-flex border-top">
+							<small class="w-50 text-center border-end py-2">
+								<a class="text-body" href={{url("/home/product-details/".$rel_product->id."/".$rel_product->category_id)}}><i class="fa fa-eye text-primary me-2"></i>View detail</a>
+							</small>
+							<small class="w-50 text-center py-2 add-to-cart">
+								@if ($rel_product->quantity == 0)
+								<a class="text-body add-to-cart"><span class="text-danger">Out of stock</span></a>
+								@else
+								<a class="text-body add-to-cart" href={{"/home/save/".$rel_product->id}}><i class="fa fa-shopping-bag text-primary me-2"></i>Add to cart</a>
+								@endif
+
+							</small>
+						</div>
+					</div>					
 				</div>
 				@endforeach
 			</div>

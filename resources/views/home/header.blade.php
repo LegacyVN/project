@@ -41,10 +41,10 @@
     </div>
 
     <nav class="navbar navbar-expand-lg navbar-light py-lg-0 px-lg-5 wow fadeIn shadow" data-wow-delay="0.1s">
-        <div class="navbar-brand ms-4 ms-lg-0">
-            <a href="/home/index">
-                <img src="{{asset('user')}}/img/logo.png" class="brand-logo" alt="logo">
-            </a>
+        <a href="{{url('/home')}}">
+        <div class="navbar-brand ms-4 ms-lg-0 d-flex justify-content-center align-items-center">            
+            <div class="brand-logo"></div>
+            <div class="text-center"><span class="fw-bold mb-4" style="color:brown; font-size:2rem">FLAVOURS</span></div>
         </div>
         </a>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -52,7 +52,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="#nav-home" class="nav-item nav-link active">Home</a>
+                <a href={{url("/home")}} class="nav-item nav-link active">Home</a>
                 <a href={{url("home#nav-about-us")}} class="nav-item nav-link">About Us</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Products</a>

@@ -6,8 +6,10 @@ namespace App\Http\Controllers;
 use App\Models\Categories;
 use App\Models\Photo;
 use App\Models\Products;
+use App\Models\Rating;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -16,7 +18,7 @@ class ProductController extends Controller
     public function index()
     {
         $categories = Categories::all();
-        $products = Products::paginate(10);
+        $products = Products::paginate(10);        
         $totalproducts = Products::count();
 
         return view('Admin/products/index', compact('categories', 'products', 'totalproducts'));
@@ -239,9 +241,47 @@ class ProductController extends Controller
 
             // Delete the photo from the database
             $photo->delete();
-            return redirect()->back()->with("success", "Image has been deleted");
+            toastr()->closeButton()->addSuccess('Image has been deleted successfully');
+            return redirect()->back();
         } catch (Exception $ex) {
-            return redirect()->back()->with("error", "Cannot delete image");
+            toastr()->closeButton()->addError("Cannot delete image");
+            return redirect()->back();
         }
+    }
+
+    //Ratings
+    public function listRatings()
+    {
+        $ratings = Rating::with(['product:id,title','user:id'])->orderBy('product_id')->paginate(10);
+        return view('Admin/products/list_ratings', compact('ratings'));
+    }
+
+    public function searchRatings(Request $request)
+    {
+        $keyword = $request->input('keyword');
+
+        $ratings = Rating::with('product:id,title')
+            ->whereHas('product', function ($query) use ($keyword) {
+                $query->where('title', 'like', "%{$keyword}%");
+            })
+            ->orderBy('product_id')
+            ->paginate(10);
+
+
+        return view('Admin/products/list_ratings', compact('ratings'));
+    }
+
+    public function deleteRating($rate_id)
+    {
+       try{
+        $rating = Rating::find($rate_id);
+        $rating->delete();   
+        toastr()->closeButton()->addSuccess('Rating has been deleted successfully');
+        return redirect()->back();
+       }
+       catch(Exception $ex) {
+            toastr()->closeButton()->addError("Cannot delete rating");
+            return redirect()->back();
+       }  
     }
 }
