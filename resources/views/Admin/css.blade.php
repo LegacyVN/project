@@ -9,7 +9,7 @@
     <meta name="author" content="pixelstrap">
     <link rel="icon" href="{{ asset('admin/images/favicon.png') }}" type="image/x-icon">
     <link rel="shortcut icon" href="{{ asset('admin/images/favicon.png') }}" type="image/x-icon">
-    <title>Fastkart - Dashboard</title>
+    <title>Flavor - Dashboard</title>
 
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
