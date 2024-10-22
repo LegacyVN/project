@@ -68,7 +68,21 @@ class HomeController extends Controller
     public function index()
     {
         $orders = Order::where('status', 0)->get();
-        return view('Admin.dashboard.index', compact('orders'));
+        $totalorders = Order::count();
+        $totalUsers = User::count();
+        $totalCheckedOrders = Order::where('status', 1)->count();
+        $totalproducts = Products::count();
+        $totalUncheckedOrders = Order::where('status', 0)->count();
+
+
+        return view('Admin.dashboard.index', [
+            'orders' => $orders,
+            'totalorders' => $totalorders,
+            'totalUsers' => $totalUsers,
+            'totalCheckedOrders' => $totalCheckedOrders,
+            'totalproducts' => $totalproducts,
+            'totalUncheckedOrders' => $totalUncheckedOrders,
+        ]);
     }
 
     //------------Function for index.blade.php-------------

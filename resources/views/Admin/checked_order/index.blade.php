@@ -6,6 +6,10 @@
         <h2 class="text-center">Checked Order</h2>
     </div>
 
+    <div class="container mt-4">
+        <p style="color: black; margin-bottom: 0">Total Checked Order: {{ $totalOrders }}</p>
+    </div>
+
     <table class="table table-bordered table-hover mt-4">
         <thead class="table-gray text-center">
             <tr>
