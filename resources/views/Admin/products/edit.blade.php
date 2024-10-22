@@ -67,8 +67,8 @@
                         <div class="form-group mb-3">
                             <label for="status">Status</label>
                             <select name="status" id="status" class="form-control" required>
-                                <option value="1" {{ $product->status == 1 ? 'selected' : '' }}>Active</option>
-                                <option value="0" {{ $product->status == 0 ? 'selected' : '' }}>Inactive</option>
+                                <option value="1" {{ $product->status == 1 ? 'selected' : '' }}>Instock</option>
+                                <option value="0" {{ $product->status == 0 ? 'selected' : '' }}>Outstock</option>
                             </select>
                         </div>
 
