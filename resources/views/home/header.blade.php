@@ -86,7 +86,7 @@
                 @if (Route::has('login'))
                 @auth
                 <div class="d-flex align-items-center me-">
-                    <a href="{{ route('profile.edit') }}" class="nav-link me-2">
+                    <a href="{{ Auth::user()->usertype == 'admin' ? route('profile.edit') : url('/profile/user-order/'.Auth::user()->id)}}" class="nav-link me-2">
                         <i class="fa fa-user"></i> {{ Auth::user()->name }}
                     </a>
                     <form method="POST" action="{{ route('logout') }}" class="mb-0">
