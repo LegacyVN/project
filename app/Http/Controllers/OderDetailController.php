@@ -13,7 +13,11 @@ class OderDetailController extends Controller   {
     public function index()
     {
         $orders = Order::where('status', 1)->get();
-        return view('Admin.checked_order.index', compact('orders'));
+        $totalOrders = Order::where('status', 1)->count();
+        return view('Admin.checked_order.index', [
+            'orders' => $orders,
+            'totalOrders' => $totalOrders,
+        ]);
     }
 
     // order detail

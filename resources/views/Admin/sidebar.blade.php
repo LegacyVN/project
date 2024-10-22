@@ -3,7 +3,9 @@
     <div>
         <div class="logo-wrapper logo-wrapper-center">
             <a href="{{ url('/') }}" title="">
-                <img class="img-fluid for-white" src="{{ asset('admin/images/logo/full-white.png') }}" alt="logo">
+                <!-- <img class="img-fluid for-white" src="{{ asset('user/img/logo.png') }}" style="height: 60px; width:60px; " alt="Logo" > -->
+                <span style="color:white; font-weight:bold; font-size:4vh; " >FLAVOURS</span>
+
             </a>
             <div class="back-btn">
                 <i class="fa fa-angle-left"></i>
@@ -14,8 +16,8 @@
         </div>
         <div class="logo-icon-wrapper">
             <a href="{{ url('/') }}">
-                <img class="img-fluid main-logo main-white" src="{{ asset('admin/images/logo/logo.png') }}" alt="logo">
-                <img class="img-fluid main-logo main-dark" src="{{ asset('admin/images/logo/logo-white.png') }}" alt="logo">
+                <img class="img-fluid for-white" src="{{ asset('user/img/logo.png') }}" style="height: 60px; width:60px; " alt="Logo" >
+
             </a>
         </div>
         <nav class="sidebar-main">

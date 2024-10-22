@@ -12,8 +12,8 @@
                 <div class="custome-1-bg b-r-4 card-body">
                     <div class="media align-items-center static-top-widget">
                         <div class="media-body p-0">
-                            <span class="m-0">Total Revenue</span>
-                            <h4 class="mb-0 counter">$6659
+                            <span class="m-0">Orders</span>
+                            <h4 class="mb-0 counter">{{ $totalorders }}
                                 <span class="badge badge-light-primary grow">
                                     <i data-feather="trending-up"></i>8.5%</span>
                             </h4>
@@ -31,8 +31,8 @@
                 <div class="custome-2-bg b-r-4 card-body">
                     <div class="media static-top-widget">
                         <div class="media-body p-0">
-                            <span class="m-0">Total Orders</span>
-                            <h4 class="mb-0 counter">9856
+                            <span class="m-0">Checked Orders</span>
+                            <h4 class="mb-0 counter">{{ $totalCheckedOrders }}
                                 <span class="badge badge-light-danger grow">
                                     <i data-feather="trending-down"></i>8.5%</span>
                             </h4>
@@ -50,8 +50,8 @@
                 <div class="custome-3-bg b-r-4 card-body">
                     <div class="media static-top-widget">
                         <div class="media-body p-0">
-                            <span class="m-0">Total Products</span>
-                            <h4 class="mb-0 counter">893
+                            <span class="m-0">Products</span>
+                            <h4 class="mb-0 counter">{{ $totalproducts }}
                                 <a href="add-new-product.html" class="badge badge-light-secondary grow">
                                     ADD NEW</a>
                             </h4>
@@ -70,8 +70,8 @@
                 <div class="custome-4-bg b-r-4 card-body">
                     <div class="media static-top-widget">
                         <div class="media-body p-0">
-                            <span class="m-0">Total Customers</span>
-                            <h4 class="mb-0 counter">4.6k
+                            <span class="m-0">Customers</span>
+                            <h4 class="mb-0 counter">{{ $totalUsers }}
                                 <span class="badge badge-light-success grow">
                                     <i data-feather="trending-down"></i>8.5%</span>
                             </h4>
@@ -89,6 +89,10 @@
 <div class="container mt-5">
     <div class="card-header bg-success text-white">
         <h2 class="text-center">Order Management</h2>
+    </div>
+
+    <div class="container mt-4">
+        <p style="color: black; margin-bottom: 0">Total Unchecked Orders: {{ $totalUncheckedOrders }}</p>
     </div>
 
     <table class="table table-bordered table-hover mt-4">
