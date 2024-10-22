@@ -33,6 +33,7 @@ Route::get('/dashboard',[HomeController::class, 'home'])->middleware(['auth', 'v
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile/user-order/{user_id}', [ProfileController::class, 'userOrders'])->name('profile.useredit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
