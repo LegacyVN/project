@@ -127,7 +127,7 @@
 						</table>
 						<div class="cart-buttons">
 							<a href={{url("home/cart")}} class="btn btn-primary rounded-pill">Refresh Cart</a>
-							@if (Auth::check())
+							@if (Auth::check() && Auth::user()->email_verified_at != NULL)
 							<button type="button" class="btn btn-secondary rounded-pill" data-bs-toggle="modal" data-bs-target="#order_modal">
 								Order Now
 							</button>
