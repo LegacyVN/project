@@ -11,7 +11,7 @@ class Rating extends Model
 
     protected $table = 'ratings'; // Specify the table name if needed
 
-    protected $primarykey = "rate_id";
+    protected $primaryKey = 'rate_id';
     protected $fillable = [
         'rate_comment',
         'rate_score',

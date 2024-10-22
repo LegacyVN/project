@@ -11,6 +11,10 @@
   }
 }
 
+.x-slot-header{
+  margin-bottom: 3vh;
+}
+
 .nav-link:hover,
 .nav-link:focus {
   color: #309311

@@ -2,18 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Agent;
 use App\Models\Categories;
-use App\Models\Category;
-use App\Models\City;
-use App\Models\Contract;
-use App\Models\Country;
-use App\Models\Hotel;
-use App\Models\HotelService;
-use App\Models\product;
-use App\Models\RoomType;
-use App\Models\TicketType;
-use App\Models\TransportService;
 use App\Models\User;
 use Exception;
 use Illuminate\Container\Attributes\Log;
@@ -140,7 +129,6 @@ public function updateUser(Request $request, $id)
 
     $user->save();
 
-    toastr()->closeButton()->addSuccess('User Updated Successfully');
     return redirect()->route('view_user')->with('msg', 'User updated successfully.');
 }
 

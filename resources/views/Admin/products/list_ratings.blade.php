@@ -33,7 +33,7 @@
     <div class="col-12">
         <div class="card shadow-lg border-0">
             <div class="card-header text-white">
-                <h4 class="text-center">Photos Management</h4>
+                <h4 class="text-center">Ratings Management</h4>
             </div>
             <div class="card-body">
                 @if(Session::has('msg'))
@@ -41,8 +41,8 @@
                 @endif
 
                 <div class="container mt-4">
-                    <form method="GET" action="{{ route('product_photos.search') }}" class="d-flex">
-                        <input type="text" name="keyword" placeholder="Search images by product title" value="{{ request('keyword') }}" class="form-control me-2">
+                    <form method="GET" action="{{ route('product_ratings.search') }}" class="d-flex">
+                        <input type="text" name="keyword" placeholder="Search ratings by product title" value="{{ request('keyword') }}" class="form-control me-2">
                         <button type="submit" class="btn btn-primary">Search</button>
                     </form>
                 </div>
@@ -51,30 +51,28 @@
                     <table class="table table-hover table-bordered align-middle">
                         <thead class="text-center">
                             <tr>
-                                <th>Photo ID</th>                                
-                                <th>Image</th>
-                                <th>Image's Name</th>
-                                <th>Product's Name</th>
-                                <th>Is Thumbnail?</th>                                
+                                <th>Rating ID</th>
+                                <th>User ID</th>
+                                <th>Rate Score</th>                                  
+                                <th>Rating Commment</th>
+                                <th>Product's Name</th>                                                              
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($photos as $photo)
+                            @foreach($ratings as $rating)
                             <tr>
-                                <td>{{ $photo->photo_id}}</td>
-                                <td class="text-center">
-                                    <img src="{{ asset('products')}}/{{$photo->photo_name}}" alt="{{ $photo->photo_name }}" class="img-fluid" style="max-width: 100px;">
-                                </td>
-                                <td class="text-center">{{ $photo->photo_name }}</td>
-                                <td class="text-center">{{ $photo->product->title }}</td>
-                                <td class="text-center">{{ $photo->photo_name == $photo->product->image ? 'Yes' : 'No' }}</td>                                 
+                                <td class="text-center">{{$rating->rate_id}}</td>
+                                <td class="text-center">{{$rating->user->id}}</td>
+                                <td class="text-center">{{ $rating->rate_score }}</td>
+                                <td class="text-center">{{ $rating->rate_comment }}</td>
+                                <td class="text-center">{{ $rating->product->title }}</td>                                                               
                                 <td class="text-center">
                                     <div class="d-flex justify-content-center">                            
-                                        <form action="{{route('product_photos.deletePhoto', $photo->photo_id)}}"  method="POST" onsubmit="return confirm('Are you sure you want to delete this photo?');" class="mx-1">
+                                        <form action="{{route('product_ratings.deleteRating', $rating->rate_id)}}"  method="POST" onsubmit="return confirm('Are you sure you want to delete this rating?');" class="mx-1">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-outline-danger btn-sm mx-1" title="Delete Photo">
+                                            <button type="submit" class="btn btn-outline-danger btn-sm mx-1" title="Delete Rating">
                                                 <i class="fa-solid fa-trash"></i>
                                             </button>
                                         </form>
@@ -87,7 +85,7 @@
                     </table>
                 </div>
                 <div class="mt-4 d-flex justify-content-center">
-                    {{ $photos->onEachSide(1)->links('vendor.pagination.bootstrap-4') }}            </div>
+                    {{ $ratings->onEachSide(1)->links('vendor.pagination.bootstrap-4') }}            </div>
             
             </div>
         </div>

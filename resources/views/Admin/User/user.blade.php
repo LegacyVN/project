@@ -57,11 +57,7 @@
                         <h4>User Management</h4>
                     </div>
                 </div>
-                <div class="card-body p-0">
-                    @if(Session::has('msg'))
-                    <p class="alert alert-success">{{ session('msg') }}</p>
-                    @endif
-
+                <div class="card-body p-0">                  
                     <div class="container mt-4">
                         <form method="GET" action="{{ route('user_search') }}">
                             <input type="text" name="keyword" placeholder="Search by user name" value="{{ request('keyword') }}" class="form-control">
