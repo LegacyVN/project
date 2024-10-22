@@ -116,7 +116,7 @@
 
                                     <td>
                                         @if($user->orders()->count() > 0)
-                                        <a href="/" class="btn btn-primary">View Orders</a>
+                                        <a href="{{url('admin/dashboard')}}" class="btn btn-primary">View Orders</a>
                                         @else
                                         <span class="btn btn-primary" style="background-color: #dc3545 !important;">No Order</span>
                                         @endif
