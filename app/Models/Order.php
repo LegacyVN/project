@@ -15,7 +15,8 @@ class Order extends Model
     protected $fillable = [
         'user_id',
         'order_date',
-        'status'
+        'status',
+        'checked_by'
     ];
 
     //Define Relationships

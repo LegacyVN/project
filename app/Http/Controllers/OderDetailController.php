@@ -39,15 +39,16 @@ public function confirm($order_id)
                     $product->quantity -= $detail->quantity;
                     $product->save(); 
                 } else {
-                    throw new \Exception('Kho hàng không đủ cho sản phẩm: ' . $product->title);
+                    throw new \Exception('Insufficient inventory for the product: ' . $product->title);
                 }
             }
             $order->status = 1;
+            $order->checked_by = auth()->user()->name;    
             $order->save();
         });
-        return redirect()->back()->with('success', 'Đơn hàng đã được xác nhận và cập nhật kho hàng thành công!');
+        return redirect()->back()->with('success', 'Order has been confirmed and inventory updated successfully!');
     }
-    return redirect()->back()->with('error', 'Không tìm thấy đơn hàng hoặc đơn hàng đã được xác nhận.');
+    return redirect()->back()->with('error', 'Order not found or order has been confirmed.');
 }
 
 

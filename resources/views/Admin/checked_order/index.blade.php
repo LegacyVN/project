@@ -16,6 +16,7 @@
                 <th>Id Contract</th>
                 <th>Customer Name</th>
                 <th>Check Status</th>
+                <th>Checked By</th>
                 <th>Order Date</th>
                 <th>Check Order</th>
             </tr>
@@ -36,6 +37,7 @@
                     </span>
                     @endif
                 </td>
+                <td>{{ $order->checked_by }}</td>
                 <td>{{ $order->created_at }}</td>
                 <td class="text-center">
                     <a href="{{ route('order.details', $order->order_id) }}" class="check-details-btn">
@@ -45,6 +47,7 @@
             </tr>
             @endforeach
         </tbody>
+        
     </table>
 </div>
 @endsection
