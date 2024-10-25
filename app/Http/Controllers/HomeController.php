@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactFormMail; // Import the Mailable
+use Illuminate\Support\Facades\Http;
 
 
 function ifExistsArray($array, $str)
@@ -136,7 +137,9 @@ class HomeController extends Controller
         
     }
 
-    //Executed when user use Contact Us form
+  
+    
+    
     public function contactUs(Request $request)
     {
         // Validate the incoming request
@@ -144,19 +147,32 @@ class HomeController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email',
             'message' => 'required|string',
+            'h-captcha-response' => 'required|string',
         ]);
-
+    
+        // Verify the hCaptcha response
+        $response = Http::asForm()->post('https://hcaptcha.com/siteverify', [
+            'secret' => env('HCAPTCHA_SECRET_KEY'),
+            'response' => $request->input('h-captcha-response'),
+        ]);
+    
+        $responseData = $response->json();
+    
+        if (!$responseData['success']) {
+            return redirect()->to('/home/index' . '/#nav-contacts')->with('msg', 'Please complete the CAPTCHA.');
+        }
+    
         // Prepare the data for the email
         $data = [
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'message' => $request->input('message'),
         ];
-
+    
         try {
             // Send the email
             Mail::to(env('MAIL_FROM_ADDRESS'))->send(new ContactFormMail($data));
-
+    
             // Return success message and redirect back
             return redirect()->to('/home/index' . '/#nav-contacts')->with('msg', 'Your message has been sent!');
         } catch (Exception $e) {
@@ -164,7 +180,8 @@ class HomeController extends Controller
             return redirect()->to('/home/index' . '/#nav-contacts')->with('msg', 'Failed to send message. Please try again later.');
         }
     }
-
+    
+    
     // ------Functions related to cart.blade.php-----------
     //Excecuted when add product to cart
     public function addToCart($id, Request $request)

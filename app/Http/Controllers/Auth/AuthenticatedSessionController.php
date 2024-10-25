@@ -49,7 +49,7 @@ class AuthenticatedSessionController extends Controller
         if ($user->user_status !== 1) {
             // Log the user out and redirect with an error message
             Auth::guard('web')->logout();
-            return redirect()->back()->withErrors(['user_status' => 'Your account is denied access. Please contact us via email.']);
+            return redirect()->back()->withErrors(['user_status' => 'Access denied. Please contact us via email for help.']);
         }
     
         // Regenerate session for the authenticated user
