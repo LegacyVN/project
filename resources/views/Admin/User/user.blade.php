@@ -126,9 +126,11 @@
                                             <a href="{{ route('edit_user', $user->id) }}" class="btn btn-edit me-2">
                                                 <span class="material-icons">edit</span>
                                             </a>
+                                            @if($user->usertype != 'admin')
                                             <a href="{{ route('delete_user', $user->id) }}" class="btn btn-delete" onclick="return confirmation(event)">
                                                 <span class="material-icons">delete</span>
                                             </a>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>

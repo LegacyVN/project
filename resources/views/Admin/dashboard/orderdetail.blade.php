@@ -48,6 +48,9 @@
                 <td colspan="4" class="text-right"><strong>Total Order Amount:</strong></td>
                 <td><strong>${{ number_format($orderTotal, 2) }}</strong></td>
             </tr>
+            <tr>
+                <td>Author: </td>
+            </tr>
         </tfoot>
     </table>
 
