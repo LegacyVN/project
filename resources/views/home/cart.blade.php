@@ -82,7 +82,7 @@
 									<td class="product-quantity single-product-form" id={{"prod-".$products[$i]->id}}>
 										<form action={{url("/update-cart")}} method="POST">
 											@csrf
-											<input class="cart-quantity" data-comparison="{{$quantity[$i]}}" type="number" min="1" max="{{$products[$i]->quantity}}" value="{{$quantity[$i]}}">
+											<input class="cart-quantity quantity-limit" data-comparison="{{$quantity[$i]}}" type="number" min="1" max="{{$products[$i]->quantity}}" value="{{$quantity[$i]}}">
 										</form>
 									</td>
 									<td class="product-total">{{"$".$final_prices[$i] * $quantity[$i]}}</td>

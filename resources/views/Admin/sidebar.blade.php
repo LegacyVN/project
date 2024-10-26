@@ -79,6 +79,21 @@
                     </li>
 
                     <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <i class="ri-focus-3-line"></i>
+                            <span>Gallery</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li>
+                                <a href="{{ url('admin/gallery') }}">All Gallery's Photos</a>
+                            </li>
+                            <li>
+                                <a href="{{ url('admin/gallery/add') }}">Add to Gallery</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="{{ url('admin/checked_order/index') }}">
                             <i class="ri-store-3-line"></i>
                             <span>Checked Order</span>

@@ -41,14 +41,13 @@
                 }
             </script>
             <div class="swiper-wrapper align-items-center">
-                <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"><img src="{{asset('user')}}/img/gallery/gallery-1.jpg" class="img-fluid" alt=""></a></div>
-                <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"><img src="{{asset('user')}}/img/gallery/gallery-2.jpg" class="img-fluid" alt=""></a></div>
-                <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"><img src="{{asset('user')}}/img/gallery/gallery-3.jpg" class="img-fluid" alt=""></a></div>
-                <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"><img src="{{asset('user')}}/img/gallery/gallery-4.jpg" class="img-fluid" alt=""></a></div>
-                <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"><img src="{{asset('user')}}/img/gallery/gallery-5.jpg" class="img-fluid" alt=""></a></div>
-                <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"><img src="{{asset('user')}}/img/gallery/gallery-6.jpg" class="img-fluid" alt=""></a></div>
-                <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"><img src="{{asset('user')}}/img/gallery/gallery-7.jpg" class="img-fluid" alt=""></a></div>
-                <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"><img src="{{asset('user')}}/img/gallery/gallery-8.jpg" class="img-fluid" alt=""></a></div>
+                @if (isset($gallery))
+                @foreach ($gallery as $photo)
+                <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"><img src="{{asset('gallery')}}/{{$photo->photo_name}}" class="img-fluid" alt=""></a></div>                
+                @endforeach  
+                @endif
+                              
+                           
             </div>
             <div class="swiper-pagination"></div>
         </div>
