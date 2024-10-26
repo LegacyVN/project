@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categories;
+use App\Models\Gallery;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Photo;
@@ -14,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactFormMail; // Import the Mailable
+
 use Illuminate\Support\Facades\Http;
 
 
@@ -55,15 +57,18 @@ function debug_to_console($data)
 
 function count_products($products, $id)
 {
-    //Calculate total times a product has been ordered
+    //Calculate total quantity of each products
     $total = 0;
     foreach ($products as $product) {
         if ($product->product_id == $id) {
-            $total++;
+            $total += $product->quantity;
+            // $total++;
         }
     }
     return $total;
 }
+
+
 class HomeController extends Controller
 {
     public function index()
@@ -98,26 +103,32 @@ class HomeController extends Controller
         $dis_products = Products::where('discount_price', '>', 0.00)->get();
         $new_products =  Products::orderBy("created_at", "desc")->take(8)->get();
         $best_products = Products::with("order_details:detail_id,product_id")->get();
+        
         $order_details = OrderDetail::get();
         $reviews = Rating::with(['user:id,name', 'product:id,title,category_id'])->whereBetween('rate_score', ["4", "5"])->get();
+        
 
         $data = [
             "products" => Products::get(),
             "categories" => Categories::get(),
-            "order_details" => OrderDetail::get()
+            "order_details" => OrderDetail::get(),
+            "gallery" => Gallery::get()
         ];
         if ($dis_products->isNotEmpty()) {
             $data["dis_products"] = $dis_products;
         }
-
+       
         if ($best_products->isNotEmpty()) {
             $products_best = collect(); //create an empty collection
-            foreach ($best_products as $product) {
-                if (count_products($order_details, $product->id) >= 5) {
-                    $products_best->push($product); //valid Products object will be pushed
-                }
+            foreach ($best_products as $best_product) {
+                $quantity_sold = count_products($order_details, $best_product->id);
+                if ($quantity_sold >= 5) {
+                    $best_product->quantity_sold = $quantity_sold; 
+                    $products_best->push($best_product); //valid Products object will be pushed
+                }                
             }
-            $data["best_products"] = $products_best;
+            // debug_to_console($products_best);
+            $data['best_products'] = $products_best->take(8);
         }
 
         if ($new_products->isNotEmpty()) {
@@ -137,9 +148,7 @@ class HomeController extends Controller
         
     }
 
-  
-    
-    
+    //Executed when user use Contact Us form
     public function contactUs(Request $request)
     {
         // Validate the incoming request
@@ -180,8 +189,7 @@ class HomeController extends Controller
             return redirect()->to('/home/index' . '/#nav-contacts')->with('msg', 'Failed to send message. Please try again later.');
         }
     }
-    
-    
+
     // ------Functions related to cart.blade.php-----------
     //Excecuted when add product to cart
     public function addToCart($id, Request $request)
@@ -342,7 +350,8 @@ class HomeController extends Controller
         if (is_null($cart) == false || $cart != '') {
             $order = [
                 'user_id' => Auth::id(),
-                'created_at' => date('Y-m-d H:i:s')
+                'created_at' => date('Y-m-d H:i:s'),
+                'checked_by' => ''
             ];
             Order::create($order);
             $latest = Order::latest()->first();
@@ -517,12 +526,12 @@ class HomeController extends Controller
 
             // Filter by minimum price
             if (!is_null($min)) {
-                $result->where('price', '>=', $min);
+                $result->whereRaw('price - (price * discount_price) >= ?', [$min]);
             }
 
             // Filter by maximum price
             if (!is_null($max)) {
-                $result->where('price', '<=', $max);
+                $result->whereRaw('price - (price * discount_price) <= ?', [$max]);
             }
 
             // Filter by status
@@ -559,6 +568,8 @@ class HomeController extends Controller
             return redirect()->back();
         }
     }
+
+    
 
     public function product_details($id)
     {

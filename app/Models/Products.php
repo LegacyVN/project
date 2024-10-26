@@ -51,4 +51,11 @@ class Products extends Model
         return $this->hasMany(OrderDetail::class, 'product_id');
     }
 
+    //Define additional functions
+    public function getDiscountPrice()
+    {
+        // Calculate the discount price
+        return $this->price - ($this->price * $this->discount_price);
+    }
+
 }

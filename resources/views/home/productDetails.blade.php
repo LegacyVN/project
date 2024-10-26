@@ -85,14 +85,20 @@ howwho
 						<p class="single-product-pricing text-primary">{{"$".$product->price}}</p>
 						@endif
 						<div class="single-product-form">
+							@if($product->quantity > 0)
 							<form method="post" action={{ url('/home/save-post/' . $product->id) }}>
 								@csrf
-								<input name="form-quantity" type="number" min="1" max="{{$product->quantity}}" placeholder="1">
+								<input name="form-quantity" class="quantity-limit" type="number" min="1" max="{{$product->quantity}}" placeholder="1">
 								<p>In Stock: {{$product->quantity}}</p>
 								<button type="submit" class="btn btn-primary rounded-pill py-sm-2 px-sm-3">
 									<i class="fas fa-shopping-cart"></i> Add to Cart
 								</button>
 							</form>
+							@else
+							<button type="button" class="btn btn-danger rounded-pill py-sm-2 px-sm-3">
+								Out Of Stock
+							</button>
+							@endif
 
 							<p><strong>Category: </strong>{{$product->category->cat_name}}</p>
 							<hr>
@@ -296,7 +302,7 @@ howwho
 							@else
 							<span class="text-primary me-1">{{"$".$rel_product->price - ($rel_product->price * $rel_product->discount_price)}}</span>
 							<span class="text-body text-decoration-line-through">{{"$".$rel_product->price}}</span>
-							@endif							
+							@endif
 						</div>
 						<div class="d-flex border-top">
 							<small class="w-50 text-center border-end py-2">
@@ -311,7 +317,7 @@ howwho
 
 							</small>
 						</div>
-					</div>					
+					</div>
 				</div>
 				@endforeach
 			</div>

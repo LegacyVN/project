@@ -5,7 +5,6 @@
 <script src="{{asset('user')}}/lib/easing/easing.min.js"></script>
 <script src="{{asset('user')}}/lib/waypoints/waypoints.min.js"></script>
 <script src="{{asset('user')}}/lib/owlcarousel/owl.carousel.min.js"></script>
-<script src="{{asset('user')}}/js/jquery.magnific-popup.min.js"></script>
 
 <!-- Template Javascript -->
 <script src="{{asset('user')}}/js/main.js"></script>

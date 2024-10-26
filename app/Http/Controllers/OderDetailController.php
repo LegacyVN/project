@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Products;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class OderDetailController extends Controller   {
@@ -43,7 +44,7 @@ public function confirm($order_id)
                 }
             }
             $order->status = 1;
-            $order->checked_by = auth()->user()->name;    
+            $order->checked_by = Auth::user()->name;    
             $order->save();
         });
         return redirect()->back()->with('success', 'Order has been confirmed and inventory updated successfully!');

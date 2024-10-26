@@ -49,7 +49,7 @@
                 <td><strong>${{ number_format($orderTotal, 2) }}</strong></td>
             </tr>
             <tr>
-                <td>Author: </td>
+                <td colspan=5>Author: {{$order->checked_by}}</td>
             </tr>
         </tfoot>
     </table>

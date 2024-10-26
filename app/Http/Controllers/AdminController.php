@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categories;
+use App\Models\Gallery;
 use App\Models\User;
 use Exception;
 use Illuminate\Container\Attributes\Log;
@@ -142,6 +143,74 @@ class AdminController extends Controller
             'users' => $users,
             'totalusers' => $totalUsers,
         ]);
+    }
+
+    // Gallery
+    public function listGallery()
+    {
+        $gallery = Gallery::orderBy('id')->paginate(10);
+        if($gallery->isNotEmpty()){
+            return view('Admin/gallery', compact('gallery'));
+        }else{
+            return view('Admin/gallery');
+        }
+        
+        
+    }
+
+    public function addToGallery(){
+
+        return view('Admin/gallery_add');
+    }
+    public function storeGallery(Request $request)
+    {
+
+        $request->validate([
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        if ($request->hasFile('photo')) {
+            $image = $request->file('photo');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $imagePath = public_path('gallery');
+
+
+            if (!file_exists($imagePath)) {
+                mkdir($imagePath, 0777, true);
+            }
+
+            $image->move($imagePath, $imageName);
+            $photo = new Gallery();
+            $photo->photo_name = $imageName;
+            $photo->save();
+            toastr()->closeButton()->addSuccess('Image has been uploaded!');
+            return redirect()->route('gallery.index');
+        } else {
+            toastr()->closeButton()->addError('Error occured when uploading image');
+           
+            return redirect()->back();
+        }
+    }
+
+    public function deleteGallery($id)
+    {
+        try {
+            $photo = Gallery::find($id);
+            $image_path = public_path('gallery/' . $photo->photo_name);
+
+            // Check if the image file exists before attempting to delete it
+            if (file_exists($image_path)) {
+                unlink($image_path); // Delete the photo file from the folder
+            }
+
+            // Delete the photo from the database
+            $photo->delete();
+            toastr()->closeButton()->addSuccess('Image has been deleted successfully');
+            return redirect()->back();
+        } catch (Exception $ex) {
+            toastr()->closeButton()->addError("Cannot delete image");
+            return redirect()->back();
+        }
     }
 
 }

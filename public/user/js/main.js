@@ -30,6 +30,16 @@
             }
         });
         averageStar();
+        $(".quantity-limit").each(function(){
+            $(this).on("input", function(){
+                console.log($(this).val());
+                const current = parseInt($(this).val());
+                const max = parseInt($(this).attr('max'));
+                if (current > max) {
+                    $(this).val($(this).attr('max'));
+                };
+            });
+        })
        
     });
 
@@ -231,6 +241,9 @@
            })
         })
     })
+
+    //Quantity control
+    
 
 
 })(jQuery);

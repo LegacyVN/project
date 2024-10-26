@@ -18,11 +18,13 @@ class ProfileController extends Controller
     public function userOrders(Request $request, $user_id){
         
         $data = [
-            'orders' => Order::with('details')->where('user_id', $user_id)->get(),
+            'orders' => Order::with('details')->orderBy('created_at', 'desc')->where('user_id', $user_id)->paginate(5),
             'user' => $request->user()
         ];
         return view('profile/edit')->with($data);
     }
+
+    
     public function edit(Request $request): View
     {
         return view('profile.edit', [
